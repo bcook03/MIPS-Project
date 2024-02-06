@@ -73,6 +73,9 @@ int main()
             PC += 4;
             I = MEM[PC];
         }
+        if(I.opcode == 2) {
+            PC = I.rs + I.rt + I.imm;
+        }
         if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
         }
