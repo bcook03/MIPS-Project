@@ -49,9 +49,13 @@ int main()
 			cout << "opcode: " << I.opcode << endl;
 			cout << I.binstr << "\t"; 
 
-			if( I.opcode == 40 ){
-				I.instStr = "ADDI\tR" + to_string(rt) + ", R" + to_string(rs) + ", #" + to_string(imm);
-                cout << I.binStr << "\t" << instStr << endl;
+            if (I.opcode == 2 ) {
+                I.instr = "J\t#" + to_string (I.rt + I.rs + I.imm);
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+			else if( I.opcode == 40 ){
+				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
+                cout << I.binStr << "\t" << I.instStr << endl;
 			}
             MEM[addr] = I;
             addr+=4;
