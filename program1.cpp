@@ -49,10 +49,14 @@ int main()
 			cout << "opcode: " << I.opcode << endl;
 			cout << I.binstr << "\t"; 
 
+            if ( I.opcode == 2 ){
+                
+            }
 			if( I.opcode == 40 ){
 				I.instStr = "ADDI\tR" + to_string(rt) + ", R" + to_string(rs) + ", #" + to_string(imm);
                 cout << I.binStr << "\t" << instStr << endl;
 			}
+
             MEM[addr] = I;
             addr+=4;
 		}
