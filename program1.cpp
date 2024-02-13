@@ -54,12 +54,13 @@ int main(int argc, char* argv[] )
 			cout << "opcode: " << I.opcode << endl;
 			cout << I.binstr << "\t"; 
 
-            if ( I.opcode == 2 ){
-                
+            if (I.opcode == 2 ) {
+                I.instr = "J\t#" + to_string (I.rt + I.rs + I.imm);
+                cout << I.binstr << "\t" << I.instStr << endl;
             }
-			if( I.opcode == 40 ){
-				I.instStr = "ADDI\tR" + to_string(rt) + ", R" + to_string(rs) + ", #" + to_string(imm);
-                cout << I.binStr << "\t" << instStr << endl;
+			else if( I.opcode == 40 ){
+				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
+                cout << I.binStr << "\t" << I.instStr << endl;
 			}
 
             MEM[addr] = I;
@@ -77,6 +78,9 @@ int main(int argc, char* argv[] )
         while (I.valid == 0 ){
             PC += 4;
             I = MEM[PC];
+        }
+        if(I.opcode == 2) {
+            PC = I.rs + I.rt + I.imm;
         }
         if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
