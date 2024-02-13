@@ -5,17 +5,22 @@
 #include <iomanip>
 using namespace std;
 
-int main()
+int main(int argc, char* argv[] )
 {
+        // ./mipssim -i test1.bin -o  x1
+        // [0]       [1]    [2]
         char buffer[4];
         int i;
         char * iPtr;
         iPtr = (char*)(void*) &i;
 
-        int FD = open("test1.bin", O_RDONLY);
+        int FD = open(argv[2], O_RDONLY);
+        ofstream disout(string (argv[4]) + "_dis.txt");
+        ofstream simout(string (argv[4]) + "_sim.txt");
 
         struct item{
             int i, rs, rt, rd, imm, opcode, binstr, valid, instStr;
+            
         }
         int addr = 96;
         int amt = 4;
