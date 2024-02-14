@@ -48,7 +48,7 @@ int main(int argc, char* argv[] )
             I.valid = asUint >> 31;
             I.opcode = asUint >> 26
             I.funct = asUint >> 6
-
+            
             I.rs = (asUint << 6)>>27;
             I.rt = (asUint << 11)>>27;
             I.imm = (i << 16) >> 16;
@@ -62,6 +62,10 @@ int main(int argc, char* argv[] )
 
             if (I.opcode == 34 ) {
                 I.instr = "J\t#" + to_string (I.instr_index);
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if (I.opcode == 0 && I.function == 8) {
+                I.instr = "JR\tR" + to_string(I.rs);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
 			else if( I.opcode == 40 ){
@@ -88,7 +92,10 @@ int main(int argc, char* argv[] )
         if(I.opcode == 34) {
             PC = I.instr_index;
         }
-        if(I.opcode == 40){
+        else if (I.opcode == 0 && I.function == 8) {
+            PC = I.rs;
+        }
+        else if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
         }
         cout << "==================\ncycle: " + to_string(cycle)
