@@ -19,7 +19,7 @@ int main(int argc, char* argv[] )
         ofstream simout(string (argv[4]) + "_sim.txt");
 
         struct item{
-            int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint;
+            int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset;
             unsigned int asUint;
             
             
@@ -55,6 +55,7 @@ int main(int argc, char* argv[] )
             I.hint = (asUint << 5) >> 6;
 
             I.instr_index = asUint << 6;
+            I.offset = asUint << 16;
 
 			cout << "valid bit: " << I.valid << endl;
 			cout << "opcode: " << I.opcode << endl;
@@ -67,6 +68,9 @@ int main(int argc, char* argv[] )
             else if (I.opcode == 0 && I.function == 8) {
                 I.instr = "JR\tR" + to_string(I.rs);
                 cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if ( I.opcode =  36) {
+                I.instr = "BEQ"
             }
 			else if( I.opcode == 40 ){
 				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
