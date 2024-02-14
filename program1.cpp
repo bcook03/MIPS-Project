@@ -20,6 +20,8 @@ int main(int argc, char* argv[] )
 
         struct item{
             int i, rs, rt, rd, imm, opcode, binstr, valid, instStr;
+            unsigned int asUint;
+            
             
         }
         int addr = 96;
@@ -54,7 +56,7 @@ int main(int argc, char* argv[] )
 			cout << "opcode: " << I.opcode << endl;
 			cout << I.binstr << "\t"; 
 
-            if (I.opcode == 2 ) {
+            if (I.opcode ==  ) {
                 I.instr = "J\t#" + to_string (I.rt + I.rs + I.imm);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
