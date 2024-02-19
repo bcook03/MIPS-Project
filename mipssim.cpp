@@ -54,7 +54,7 @@ int main(int argc, char* argv[] )
             I.rt = (asUint << 11)>>27;
             I.imm = (i << 16) >> 16;
 
-            I.instr_index = asUint >> 6;
+            I.instr_index = (asUint << 6) >> 6;
             I.offset = (asUint << 16) >> 16;
 
 			cout << "valid bit: " << I.valid << endl;
@@ -67,6 +67,10 @@ int main(int argc, char* argv[] )
             }
             else if (I.opcode == 0 && I.funct == 8) {
                 I.instStr = "JR\tR" + to_string(I.rs);
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if ( I.opcode == 33 && I.rt == 0) {
+                I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
             else if ( I.opcode ==  36) {
