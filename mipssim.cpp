@@ -21,9 +21,9 @@ int main(int argc, char* argv[] )
         struct item{
             int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset;
             unsigned int asUint;
-            
-            
-        }
+
+
+        };
         int addr = 96;
         int amt = 4;
         while( amt != 0 )
@@ -40,14 +40,14 @@ int main(int argc, char* argv[] )
                         cout << "i = " <<hex<< i << dec << endl;
                 
 			unsigned int asUint = (unsigned int) i;
-            I.asUint = asUint
+            I.asUint = asUint;
 
 			bitset<32> b( i );
             I.binstr = b.to_string();
             
             I.valid = asUint >> 31;
-            I.opcode = asUint >> 26
-            I.funct = asUint >> 6
+            I.opcode = asUint >> 26;
+            I.funct = asUint >> 6;
             
             I.rs = (asUint << 6)>>27;
             I.rt = (asUint << 11)>>27;
@@ -62,15 +62,15 @@ int main(int argc, char* argv[] )
 			cout << I.binstr << "\t"; 
 
             if (I.opcode == 34 ) {
-                I.instr = "J\t#" + to_string (I.instr_index);
+                I.instStr = "J\t#" + to_string(I.instr_index);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
             else if (I.opcode == 0 && I.function == 8) {
-                I.instr = "JR\tR" + to_string(I.rs);
+                I.instStr = "JR\tR" + to_string(I.rs);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode =  36) {
-                I.instr = "BEQ"
+            else if ( I.opcode ==  36) {
+                I.instStr = "BEQ" + ;
             }
 			else if( I.opcode == 40 ){
 				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
@@ -95,6 +95,9 @@ int main(int argc, char* argv[] )
         }
         if(I.opcode == 34) {
             PC = I.instr_index;
+        }
+        else if (I.opcode == 36){
+            
         }
         else if (I.opcode == 0 && I.function == 8) {
             PC = I.rs;
