@@ -26,6 +26,7 @@ int main(int argc, char* argv[] )
         };
         int addr = 96;
         int amt = 4;
+        item MEM[500];
         while( amt != 0 )
         {
             
@@ -47,15 +48,14 @@ int main(int argc, char* argv[] )
             
             I.valid = asUint >> 31;
             I.opcode = asUint >> 26;
-            I.funct = asUint >> 6;
+            I.funct = (asUint << 26) >> 26;
             
             I.rs = (asUint << 6)>>27;
             I.rt = (asUint << 11)>>27;
             I.imm = (i << 16) >> 16;
-            I.hint = (asUint << 5) >> 6;
 
-            I.instr_index = asUint << 6;
-            I.offset = asUint << 16;
+            I.instr_index = asUint >> 6;
+            I.offset = (asUint << 16) >> 16;
 
 			cout << "valid bit: " << I.valid << endl;
 			cout << "opcode: " << I.opcode << endl;
@@ -65,16 +65,17 @@ int main(int argc, char* argv[] )
                 I.instStr = "J\t#" + to_string(I.instr_index);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if (I.opcode == 0 && I.function == 8) {
+            else if (I.opcode == 0 && I.funct == 8) {
                 I.instStr = "JR\tR" + to_string(I.rs);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
             else if ( I.opcode ==  36) {
-                I.instStr = "BEQ" + ;
+                I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
+                cout << I.binstr << "\t" << I.instStr << endl;
             }
 			else if( I.opcode == 40 ){
 				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
-                cout << I.binStr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
 			}
 
             MEM[addr] = I;
@@ -97,9 +98,9 @@ int main(int argc, char* argv[] )
             PC = I.instr_index;
         }
         else if (I.opcode == 36){
-            
+            PC += I.offset;
         }
-        else if (I.opcode == 0 && I.function == 8) {
+        else if (I.opcode == 0 && I.funct == 8) {
             PC = I.rs;
         }
         else if(I.opcode == 40){
