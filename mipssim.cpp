@@ -52,7 +52,8 @@ int main(int argc, char* argv[] )
             
             I.rs = (asUint << 6)>>27;
             I.rt = (asUint << 11)>>27;
-            I.imm = (i << 16) >> 16;
+            I.imm = (asUint << 16) >> 16;
+            I.rd = (asUint << 16) >> 27;
 
             I.instr_index = (asUint << 6) >> 6;
             I.offset = (asUint << 16) >> 16;
@@ -75,6 +76,10 @@ int main(int argc, char* argv[] )
             }
             else if ( I.opcode ==  36) {
                 I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if ( I.opcode == 0 && I.funct == 32) {
+                I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
 			else if( I.opcode == 40 ){
@@ -105,7 +110,10 @@ int main(int argc, char* argv[] )
             PC += I.offset;
         }
         else if (I.opcode == 0 && I.funct == 8) {
-            PC = I.rs;
+            PC = R[I.rs];
+        }
+        else if (I.opcode == 0 && I.funct == 32) {
+            R[I.rd] = R[I.rs] + R[I.rt];
         }
         else if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
