@@ -97,7 +97,7 @@ int main(int argc, char* argv[] )
             MEM[addr] = I;
             addr+=4;
 		}
-        if (I.opcode ==)
+        if (I.opcode == 0 && I.funct == 13) break;
     }
     // end of decode
 

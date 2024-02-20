@@ -57,6 +57,9 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
-    "iostream": "cpp"
-  }
+    "*.embeddedhtml": "html",
+    "iostream": "cpp",
+    "bitset": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "enabled"
 }
