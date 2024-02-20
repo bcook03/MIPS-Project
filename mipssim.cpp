@@ -148,6 +148,30 @@ int main(int argc, char* argv[] )
         else if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
         }
+        else if(I.opcode == 60 && I.funct == 2){
+	        R[I.rd] = R[I.rs] * R[I.rt];
+        }
+        else if(I.opcode == 32 && I.funct == 36) {
+            if(R[I.rs] == 1 && R[I.rt] == 1){
+		        R[I.rd] = 1;
+	        }
+	        else {
+		        R[I.rd] = 0;
+	        }
+        }
+        else if(I.opcode == 32 && I.funct ==37) {
+	        if(R[I.rs] == 1 || R[I.rt] == 1){
+		        R[I.rd] = 1;
+	        }
+	        else {
+		        R[I.rd] = 0;
+	        }
+        }
+        else if(I.opcode == 32 && I.funct == 5) {
+	        if(R[I.rt] == 0) {
+		        R[I.rd] = R[I.rs];
+	        }
+        }
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
                 + to_string(R[0]) + " " + to_string (R[1]) + "\n";
