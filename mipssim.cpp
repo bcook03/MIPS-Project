@@ -20,7 +20,7 @@ int main(int argc, char* argv[] )
         ofstream simout(string (argv[4]) + "_sim.txt");
 
         struct item{
-            int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset;
+            int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset, sa;
             unsigned int asUint;
 
 
@@ -55,6 +55,7 @@ int main(int argc, char* argv[] )
             I.rt = (asUint << 11)>>27;
             I.imm = (asUint << 16) >> 16;
             I.rd = (asUint << 16) >> 27;
+            I.sa = (asUint << 21) >> 27;
 
             I.instr_index = (asUint << 6) >> 6;
             I.offset = (asUint << 16) >> 16;
@@ -94,6 +95,27 @@ int main(int argc, char* argv[] )
                 cout << I.binstr << "\t" << I.instStr << endl;
 			}
             
+            else if(I.opcode == 60 && I.funct == 2){
+	            I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct == 36) {
+	            I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct ==37) {
+	            I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct == 5) {
+	            I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32) {
+	            I.instStr = "NOP";
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+
 
             MEM[addr] = I;
             addr+=4;
