@@ -68,7 +68,7 @@ int main(int argc, char* argv[] )
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if (I.opcode == 0 && I.funct == 8) {
+            else if (I.opcode == 32 && I.funct == 8) {
                 I.instStr = "JR\tR" + to_string(I.rs);
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
@@ -83,7 +83,7 @@ int main(int argc, char* argv[] )
                 disout << I.binstr << "\t" << I.instStr << endl;                
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode == 0 && I.funct == 32) {
+            else if ( I.opcode == 32 && I.funct == 32) {
                 I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
@@ -118,10 +118,10 @@ int main(int argc, char* argv[] )
         else if (I.opcode == 36){
             PC += I.offset;
         }
-        else if (I.opcode == 0 && I.funct == 8) {
+        else if (I.opcode == 32 && I.funct == 8) {
             PC = R[I.rs];
         }
-        else if (I.opcode == 0 && I.funct == 32) {
+        else if (I.opcode == 32 && I.funct == 32) {
             R[I.rd] = R[I.rs] + R[I.rt];
         }
         else if(I.opcode == 40){
