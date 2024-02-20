@@ -20,7 +20,7 @@ int main(int argc, char* argv[] )
         ofstream simout(string (argv[4]) + "_sim.txt");
 
         struct item{
-            int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset;
+            int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset, sa;
             unsigned int asUint;
 
 
@@ -55,6 +55,7 @@ int main(int argc, char* argv[] )
             I.rt = (asUint << 11)>>27;
             I.imm = (asUint << 16) >> 16;
             I.rd = (asUint << 16) >> 27;
+            I.sa = (asUint << 21) >> 27;
 
             I.instr_index = (asUint << 6) >> 6;
             I.offset = (asUint << 16) >> 16;
