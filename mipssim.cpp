@@ -93,6 +93,27 @@ int main(int argc, char* argv[] )
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
 			}
+            else if(I.opcode == 60 && I.funct == 2){
+	            I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct == 36) {
+	            I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct ==37) {
+	            I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct == 5) {
+	            I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32) {
+	            I.instStr = "NOP";
+	            cout << I.binstr << "\t" << I.instStr << endl;
+            }
+
 
             MEM[addr] = I;
             addr+=4;
