@@ -3,6 +3,7 @@
 #include <fcntl.h>
 #include <bitset>
 #include <iomanip>
+#include <fstream>
 using namespace std;
 
 int main(int argc, char* argv[] )
@@ -21,11 +22,12 @@ int main(int argc, char* argv[] )
         struct item{
             int i, rs, rt, rd, imm, opcode, binstr, valid, instStr, instr_index, funct, hint, offset;
             unsigned int asUint;
-            
-            
-        }
+
+
+        };
         int addr = 96;
         int amt = 4;
+        item MEM[500];
         while( amt != 0 )
         {
             
@@ -40,47 +42,64 @@ int main(int argc, char* argv[] )
                         cout << "i = " <<hex<< i << dec << endl;
                 
 			unsigned int asUint = (unsigned int) i;
-            I.asUint = asUint
+            I.asUint = asUint;
 
 			bitset<32> b( i );
             I.binstr = b.to_string();
             
             I.valid = asUint >> 31;
-            I.opcode = asUint >> 26
-            I.funct = asUint >> 6
+            I.opcode = asUint >> 26;
+            I.funct = (asUint << 26) >> 26;
             
             I.rs = (asUint << 6)>>27;
             I.rt = (asUint << 11)>>27;
-            I.imm = (i << 16) >> 16;
-            I.hint = (asUint << 5) >> 6;
+            I.imm = (asUint << 16) >> 16;
+            I.rd = (asUint << 16) >> 27;
 
-            I.instr_index = asUint << 6;
-            I.offset = asUint << 16;
+            I.instr_index = (asUint << 6) >> 6;
+            I.offset = (asUint << 16) >> 16;
 
 			cout << "valid bit: " << I.valid << endl;
 			cout << "opcode: " << I.opcode << endl;
 			cout << I.binstr << "\t"; 
 
             if (I.opcode == 34 ) {
-                I.instr = "J\t#" + to_string (I.instr_index);
+                I.instStr = "J\t#" + to_string(I.instr_index);
+                disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if (I.opcode == 0 && I.function == 8) {
-                I.instr = "JR\tR" + to_string(I.rs);
+            else if (I.opcode == 32 && I.funct == 8) {
+                I.instStr = "JR\tR" + to_string(I.rs);
+                disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode =  36) {
-                I.instr = "BEQ"
+            else if ( I.opcode == 33 && I.rt == 0) {
+                I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if ( I.opcode ==  36) {
+                I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
+                disout << I.binstr << "\t" << I.instStr << endl;                
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if ( I.opcode == 32 && I.funct == 32) {
+                I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
+                disout << I.binstr << "\t" << I.instStr << endl; 
+                cout << I.binstr << "\t" << I.instStr << endl;
             }
 			else if( I.opcode == 40 ){
 				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
-                cout << I.binStr << "\t" << I.instStr << endl;
+                disout << I.binstr << "\t" << I.instStr << endl; 
+                cout << I.binstr << "\t" << I.instStr << endl;
 			}
 
             MEM[addr] = I;
             addr+=4;
 		}
-    } // end of decode
+        if (I.opcode == 0 && I.funct == 13) break;
+    }
+    // end of decode
 
     int PC = 96;
     int R[32] = {0};
@@ -96,8 +115,14 @@ int main(int argc, char* argv[] )
         if(I.opcode == 34) {
             PC = I.instr_index;
         }
-        else if (I.opcode == 0 && I.function == 8) {
-            PC = I.rs;
+        else if (I.opcode == 36){
+            PC += I.offset;
+        }
+        else if (I.opcode == 32 && I.funct == 8) {
+            PC = R[I.rs];
+        }
+        else if (I.opcode == 32 && I.funct == 32) {
+            R[I.rd] = R[I.rs] + R[I.rt];
         }
         else if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
@@ -105,11 +130,14 @@ int main(int argc, char* argv[] )
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
                 + to_string(R[0]) + " " + to_string (R[1]) + "\n";
+        simout << "==================\ncycle: " + to_string(cycle)
+                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
+                + to_string(R[0]) + " " + to_string (R[1]) + "\n";
 
         PC += 4;
         cycle ++;
 
-        if (cycle >= 2) break; 
+        if (I.opcode == 0 && I.funct == 13) break; 
     }
 
 
