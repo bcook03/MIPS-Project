@@ -64,55 +64,60 @@ int main(int argc, char* argv[] )
 			cout << "opcode: " << I.opcode << endl;
 			cout << I.binstr << "\t"; 
 
-            if (I.opcode == 34 ) {
+            if (I.opcode == 34 ) {                                   // Jump
                 I.instStr = "J\t#" + to_string(I.instr_index);
-                disout << I.binstr << "\t" << I.instStr << endl; 
+                disout << I.binstr << "\t" << I.instStr << endl;       
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if (I.opcode == 32 && I.funct == 8) {
+            else if (I.opcode == 32 && I.funct == 8) {              // Jump Register
                 I.instStr = "JR\tR" + to_string(I.rs);
-                disout << I.binstr << "\t" << I.instStr << endl; 
+                disout << I.binstr << "\t" << I.instStr << endl;        
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode == 33 && I.rt == 0) {
-                I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);
-                disout << I.binstr << "\t" << I.instStr << endl;
+            else if ( I.opcode == 33 && I.rt == 0) {                // Branch on Less Than Zero
+                I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);      
+                disout << I.binstr << "\t" << I.instStr << endl;                            
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode ==  36) {
+            else if ( I.opcode ==  36) {                            // Branch on Equal
                 I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
                 disout << I.binstr << "\t" << I.instStr << endl;                
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode == 32 && I.funct == 32) {
+            else if ( I.opcode == 32 && I.funct == 32) {            // ADD Word
                 I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-			else if( I.opcode == 40 ){
+			else if( I.opcode == 40 ){                              // ADD Immediate
 				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
 			}
             
-            else if(I.opcode == 60 && I.funct == 2){
+            else if(I.opcode == 60 && I.funct == 2){                // Multiply Word
 	            I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl; 
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if(I.opcode == 32 && I.funct == 36) {
+            else if(I.opcode == 32 && I.funct == 36) {              // AND operation
 	            I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl; 
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if(I.opcode == 32 && I.funct ==37) {
+            else if(I.opcode == 32 && I.funct ==37) {               // OR operation
 	            I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl; 
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if(I.opcode == 32 && I.funct == 5) {
+            else if(I.opcode == 32 && I.funct == 5) {               
 	            I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl; 
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if(I.opcode == 32) {
+            else if(I.opcode == 32) {                               
 	            I.instStr = "NOP";
+                disout << I.binstr << "\t" << I.instStr << endl; 
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
 
