@@ -133,14 +133,14 @@ else if(I.opcode == 35){
     cout << I.binstr << "\t" << I.instStr << endl;
     }
 
-else if(I.opcode == 32){
+else if(I.opcode == 32 && I.funct == 0){
     I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa)
     // it shifts left
     disout << I.binstr << "\t" << I.instStr << endl; 
     cout << I.binstr << "\t" << I.instStr << endl;
 }
 
-else if(I.opcode == 32){
+else if(I.opcode == 32 && I.sa == 2){
     I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa)
     // it shifts right
     disout << I.binstr << "\t" << I.instStr << endl; 
@@ -179,6 +179,22 @@ else if(I.opcode == 32){
         }
         else if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
+        }
+        if(I.opcode == 32 && I.funct == 34) {
+	        R[I.rd] = R[I.rs] - R[I.rt];
+        }
+        if(I.opcode == 43){
+            MEM[I.rs + I.offest] = R[I.rt];
+        }
+
+        if(I.opcode == 35){
+            R[I.rt] = MEM[I.rs + I.offest];
+        }
+        if(I.opcode == 32 && I.funct == 0){
+            R[I.rd] = R[I.rt] << I.sa;
+        }
+        if(I.opcode == 32 && I.funct == 2){
+            R[I.rd] = R[I.rt] >> I.sa;
         }
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
