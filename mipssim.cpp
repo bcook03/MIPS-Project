@@ -8,44 +8,45 @@ using namespace std;
 
 int main(int argc, char* argv[] )
 {
-        // ./mipssim -i test1.bin -o  x1
-        // [0]       [1]    [2]
-        char buffer[4];
-        int i;
-        char * iPtr;
-        iPtr = (char*)(void*) &i;
+    // ./mipssim -i test1.bin -o  x1
+    // [0]       [1]    [2]
+    char buffer[4];
+    int i;
+    char * iPtr;
+    iPtr = (char*)(void*) &i;
+    bool breakVal = false;
 
-        int FD = open(argv[2], O_RDONLY);
-        ofstream disout(string (argv[4]) + "_dis.txt");
-        ofstream simout(string (argv[4]) + "_sim.txt");
+    int FD = open(argv[2], O_RDONLY);
+    ofstream disout(string (argv[4]) + "_dis.txt");
+    ofstream simout(string (argv[4]) + "_sim.txt");
 
-        struct item{
-            int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa;
-            unsigned int asUint;
-            string instStr, binstr;
+    struct item{
+        int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa;
+        unsigned int asUint;
+        string instStr, binstr;
 
 
-        };
-        int addr = 96;
-        int amt = 4;
-        item MEM[500];
-        while( amt != 0 )
+    };
+    int addr = 96;
+    int amt = 4;
+    item MEM[500];
+    while( breakVal == false )
+    {
+        
+        amt = read(FD, buffer, 4);
+        if(amt == 4)
         {
+            iPtr[0] = buffer[3];
+            iPtr[1] = buffer[2];
+            iPtr[2] = buffer[1];
+            iPtr[3] = buffer[0];
+            item I;
+            cout << "i = " <<hex<< i << dec << endl;
             
-                amt = read(FD, buffer, 4);
-                if(amt == 4)
-                {
-                        iPtr[0] = buffer[3];
-                        iPtr[1] = buffer[2];
-                        iPtr[2] = buffer[1];
-                        iPtr[3] = buffer[0];
-                        item I;
-                        cout << "i = " <<hex<< i << dec << endl;
-                
-			unsigned int asUint = (unsigned int) i;
+            unsigned int asUint = (unsigned int) i;
             I.asUint = asUint;
 
-			bitset<32> b( i );
+            bitset<32> b( i );
             I.binstr = b.to_string();
             
             I.valid = asUint >> 31;
@@ -61,82 +62,85 @@ int main(int argc, char* argv[] )
             I.instr_index = (asUint << 6) >> 6;
             I.offset = (asUint << 16) >> 16;
 
-			cout << "valid bit: " << I.valid << endl;
-			cout << "opcode: " << I.opcode << endl;
-			cout << I.binstr << "\t"; 
+            cout << "valid bit: " << I.valid << endl;
+            cout << "opcode: " << I.opcode << endl;
+            cout << I.binstr << "\t"; 
 
-            if (I.opcode == 34 ) {                                   // Jump
+            if (I.opcode == 34 ) {
                 I.instStr = "J\t#" + to_string(I.instr_index);
-                disout << I.binstr << "\t" << I.instStr << endl;       
+                disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if (I.opcode == 32 && I.funct == 8) {              // Jump Register
+            else if (I.opcode == 32 && I.funct == 8) {
                 I.instStr = "JR\tR" + to_string(I.rs);
-                disout << I.binstr << "\t" << I.instStr << endl;        
+                disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode == 33 && I.rt == 0) {                // Branch on Less Than Zero
-                I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);      
-                disout << I.binstr << "\t" << I.instStr << endl;                            
+            else if ( I.opcode == 33 && I.rt == 0) {
+                I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);
+                disout << I.binstr << "\t" << I.instStr << endl;
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode ==  36) {                            // Branch on Equal
+            else if ( I.opcode ==  36) {
                 I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
                 disout << I.binstr << "\t" << I.instStr << endl;                
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else if ( I.opcode == 32 && I.funct == 32) {            // ADD Word
+            else if ( I.opcode == 32 && I.funct == 32) {
                 I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-			else if( I.opcode == 40 ){                              // ADD Immediate
-				I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
+            else if( I.opcode == 40 ){
+                I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
                 disout << I.binstr << "\t" << I.instStr << endl; 
                 cout << I.binstr << "\t" << I.instStr << endl;
-			}
+            }
+            else if(I.opcode == 60 && I.funct == 2){
+                I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct == 36) {
+                I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct ==37) {
+                I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32 && I.funct == 5) {
+                I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 32) {
+                I.instStr = "NOP";
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
+            else if(I.opcode == 0 && I.funct == 13) {
+                breakVal = false;
+                I.instStr = "BREAK";
+                disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
+            }
             
-            else if(I.opcode == 60 && I.funct == 2){                // Multiply Word
-	            I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
-                disout << I.binstr << "\t" << I.instStr << endl; 
-	            cout << I.binstr << "\t" << I.instStr << endl;
-            }
-            else if(I.opcode == 32 && I.funct == 36) {              // AND operation
-	            I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
-                disout << I.binstr << "\t" << I.instStr << endl; 
-	            cout << I.binstr << "\t" << I.instStr << endl;
-            }
-            else if(I.opcode == 32 && I.funct ==37) {               // OR operation
-	            I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
-                disout << I.binstr << "\t" << I.instStr << endl; 
-	            cout << I.binstr << "\t" << I.instStr << endl;
-            }
-            else if(I.opcode == 32 && I.funct == 5) {               
-	            I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
-                disout << I.binstr << "\t" << I.instStr << endl; 
-	            cout << I.binstr << "\t" << I.instStr << endl;
-            }
-            else if(I.opcode == 32) {                               
-	            I.instStr = "NOP";
-                disout << I.binstr << "\t" << I.instStr << endl; 
-	            cout << I.binstr << "\t" << I.instStr << endl;
-            }
-	    else if(I.opcode == 0 && I.funct == 13)
-		break;
-
 
             MEM[addr] = I;
             addr+=4;
-		}
-	break;
-    }
+        }
+    } 
+
     // end of decode
 
     int PC = 96;
     int R[32] = {0};
     int cycle = 1;
-
-    while( true ){
+    breakVal = true;
+    while( breakVal == true; ){
 
         item I = MEM[PC];
         while (I.valid == 0 ){
@@ -158,30 +162,8 @@ int main(int argc, char* argv[] )
         else if(I.opcode == 40){
             R[I.rt] = R[I.rs] + I.imm;
         }
-        else if(I.opcode == 60 && I.funct == 2){
-	        R[I.rd] = R[I.rs] * R[I.rt];
-        }
-        else if(I.opcode == 32 && I.funct == 36) {
-            if(R[I.rs] == 1 && R[I.rt] == 1){
-		        R[I.rd] = 1;
-	        }
-	        else {
-		        R[I.rd] = 0;
-	        }
-        }
-        else if(I.opcode == 32 && I.funct ==37) {
-	        if(R[I.rs] == 1 || R[I.rt] == 1){
-		        R[I.rd] = 1;
-	        }
-	        else {
-		        R[I.rd] = 0;
-	        }
-        }
-        else if(I.opcode == 32 && I.funct == 5) {
-	        if(R[I.rt] == 0) {
-		        R[I.rd] = R[I.rs];
-	        }
-        }
+        else if(I.opcode == 0 && I.funct == 13)
+		    breakVal == false;
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
                 + to_string(R[0]) + " " + to_string (R[1]) + "\n";
@@ -191,8 +173,7 @@ int main(int argc, char* argv[] )
 
         PC += 4;
         cycle ++;
-
-        if (I.opcode == 0 && I.funct == 13) break; 
+       
     }
 
 
