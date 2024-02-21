@@ -115,7 +115,37 @@ int main(int argc, char* argv[] )
 	            I.instStr = "NOP";
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
+            else if(I.opcode == 32 && I.funct == 34) {
+                I.instStr = "SUB\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt); 
+                disout << I.binstr << "\t" << I.instStr << endl; 
+                cout << I.binstr << "\t" << I.instStr << endl;
+                }
 
+else if(I.opcode == 43){
+    I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.offset);
+    disout << I.binstr << "\t" << I.instStr << endl; 
+    cout << I.binstr << "\t" << I.instStr << endl;
+    }
+
+else if(I.opcode == 35){
+    I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.offset);
+    disout << I.binstr << "\t" << I.instStr << endl; 
+    cout << I.binstr << "\t" << I.instStr << endl;
+    }
+
+else if(I.opcode == 32){
+    I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa)
+    // it shifts left
+    disout << I.binstr << "\t" << I.instStr << endl; 
+    cout << I.binstr << "\t" << I.instStr << endl;
+}
+
+else if(I.opcode == 32){
+    I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa)
+    // it shifts right
+    disout << I.binstr << "\t" << I.instStr << endl; 
+    cout << I.binstr << "\t" << I.instStr << endl;
+    }
 
             MEM[addr] = I;
             addr+=4;
