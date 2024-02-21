@@ -20,9 +20,9 @@ int main(int argc, char* argv[] )
         ofstream simout(string (argv[4]) + "_sim.txt");
 
         struct item{
-            int i, rs, rt, rd, imm, opcode, binstr, valid,  instr_index, funct, hint, offset, sa;
+            int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa;
             unsigned int asUint;
-            string instStr,
+            string instStr, binstr;
 
 
         };
@@ -121,12 +121,14 @@ int main(int argc, char* argv[] )
                 disout << I.binstr << "\t" << I.instStr << endl; 
 	            cout << I.binstr << "\t" << I.instStr << endl;
             }
+	    else if(I.opcode == 0 && I.funct == 13)
+		break;
 
 
             MEM[addr] = I;
             addr+=4;
 		}
-        if (I.opcode == 0 && I.funct == 13) break;
+	break;
     }
     // end of decode
 
