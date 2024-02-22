@@ -237,7 +237,7 @@ int main(int argc, char* argv[] )
                 R[I.rt] = MEM[I.rs + I.offset].rt;
             }
 
-            else if(I.opcode == 32 && I.funct == 0){
+            else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
                 R[I.rd] = R[I.rt] << I.sa;
             }
             
@@ -247,7 +247,7 @@ int main(int argc, char* argv[] )
             else if (I.opcode == 0 && I.funct == 13){
                 breakVal = false;
             }
-        
+
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
         for (int i = 0; i < 32; i++) {
@@ -267,7 +267,7 @@ int main(int argc, char* argv[] )
         }
         PC += 4;
         cycle ++;
-    }
+        }
        
-}
+    }
 
