@@ -42,7 +42,7 @@ int main(int argc, char* argv[] )
             iPtr[2] = buffer[1];
             iPtr[3] = buffer[0];
             item I;
-            cout << "i = " <<hex<< i << dec << endl;
+            
             
             unsigned int asUint = (unsigned int) i;
             I.asUint = asUint;
@@ -63,9 +63,6 @@ int main(int argc, char* argv[] )
             I.instr_index = (asUint << 6) >> 6;
             I.offset = (asUint << 16) >> 16;
 
-            cout << "valid bit: " << I.valid << endl;
-            cout << "opcode: " << I.opcode << endl;
-            cout << I.binstr << "\t"; 
             if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
                 disout << I.binstr << "\t" << I.instStr << endl;
