@@ -232,19 +232,19 @@ int main(int argc, char* argv[] )
             R[I.rd] = R[I.rs] - R[I.rt];
             }
             else if(I.opcode == 43){
-                MEM[I.rs + I.offest] = R[I.rt];
+                MEM[I.rs + I.offset].rt = R[I.rt];
             }
 
             else if(I.opcode == 35){
-                R[I.rt] = MEM[I.rs + I.offest];
+                R[I.rt] = MEM[I.rs + I.offset].rt;
             }
 
             else if(I.opcode == 32 && I.funct == 0){
-            R[I.rd] = R[I.rt] << I.sa;
+                R[I.rd] = R[I.rt] << I.sa;
             }
             
             else if(I.opcode == 32 && I.funct == 2){
-            R[I.rd] = R[I.rt] >> I.sa;
+                R[I.rd] = R[I.rt] >> I.sa;
             }
             else if (I.opcode == 0 && I.funct == 13)
                 breakVal = false;
