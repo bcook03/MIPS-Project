@@ -247,19 +247,27 @@ int main(int argc, char* argv[] )
             else if (I.opcode == 0 && I.funct == 13){
                 breakVal = false;
             }
+        
         cout << "==================\ncycle: " + to_string(cycle)
-                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
-                + to_string(R[0]) + " " + to_string (R[1]) + "\n";
+                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
+        for (int i = 0; i < 32; i++) {
+            cout << to_string(R[i]) << "\t";
+            if (i % 6 == 0) {
+                cout << endl;
+            }
+            }
         simout << "==================\ncycle: " + to_string(cycle)
-                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n"
-                + to_string(R[0]) + " " + to_string (R[1]) + "\n";
-
+                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
+                for (int i = 0; i < 32; i++) {
+                    cout << to_string(R[i]) << "\t";
+                    if (i % 6 == 0){
+                        cout << endl;
+                    }
+                }
+        }
         PC += 4;
         cycle ++;
-        }
-       
     }
-
-
-
+       
 }
+
