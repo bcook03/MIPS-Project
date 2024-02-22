@@ -1,3 +1,4 @@
+#include <map>
 #include <iostream>
 #include <unistd.h>
 #include <fcntl.h>
@@ -151,15 +152,15 @@ int main(int argc, char* argv[] )
                     }
 
                     else if(I.opcode == 32){
-                    I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa)
+                    I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     // it shifts left
                     disout << I.binstr << "\t" << I.instStr << endl; 
                     cout << I.binstr << "\t" << I.instStr << endl;
                     }
 
                     else if(I.opcode == 32){
-                    I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa)
-                    it shifts right
+                    I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
+                    //it shifts right
                     disout << I.binstr << "\t" << I.instStr << endl; 
                     cout << I.binstr << "\t" << I.instStr << endl;
                     }
@@ -194,7 +195,7 @@ int main(int argc, char* argv[] )
             else if (I.opcode == 32 && I.funct == 8) {
                 PC = R[I.rs];
             }
-            else if ( I.opcode == 33 && I.rt == 0) {
+            else if ( I.opcode == 33 && R[I.rt] == 0) {
                 PC += I.offset;
             }
             else if (I.opcode == 32 && I.funct == 32) {
