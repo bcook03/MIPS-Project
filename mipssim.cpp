@@ -119,7 +119,7 @@ int main(int argc, char* argv[] )
                     disout << I.binstr << "\t" << I.instStr << endl;
                     cout << I.binstr << "\t" << I.instStr << endl;
                 }
-                else if(I.opcode == 32) {
+                else if(I.opcode == 32 && I.sa == 0 && I.funct == 0) {
                     I.instStr = "NOP";
                     disout << I.binstr << "\t" << I.instStr << endl;
                     cout << I.binstr << "\t" << I.instStr << endl;
@@ -142,20 +142,20 @@ int main(int argc, char* argv[] )
                     cout << I.binstr << "\t" << I.instStr << endl;
                 }
 
-                else if(I.opcode == 32){
+                else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
                     I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     // it shifts left
                     disout << I.binstr << "\t" << I.instStr << endl; 
                     cout << I.binstr << "\t" << I.instStr << endl;
                 }
 
-                else if(I.opcode == 32){
+                else if(I.opcode == 32 && I.funct == 2){
                     I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     //it shifts right
                     disout << I.binstr << "\t" << I.instStr << endl; 
                     cout << I.binstr << "\t" << I.instStr << endl;
                     }
-                else if (I.opcode == 0 && I.funct == 13) {
+                else if (I.opcode == 32 && I.funct == 13) {
                     breakVal = false;
                     I.instStr = "BREAK";
                     disout << I.binstr << "\t" << I.instStr << endl; 
