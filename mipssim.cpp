@@ -162,6 +162,9 @@ int main(int argc, char* argv[] )
             else if (I.opcode == 32 && I.funct == 8) {
                 PC = R[I.rs];
             }
+            else if ( I.opcode == 33 && I.rt == 0) {
+                PC += I.offset;
+            }
             else if (I.opcode == 32 && I.funct == 32) {
                 R[I.rd] = R[I.rs] + R[I.rt];
             }
