@@ -155,6 +155,13 @@ int main(int argc, char* argv[] )
                     disout << I.binstr << "\t" << I.instStr << endl; 
                     cout << I.binstr << "\t" << I.instStr << endl;
                     }
+                else if (I.opcode == 0 && I.funct == 13) {
+                    breakVal = false;
+                    I.instStr = "BREAK";
+                    disout << I.binstr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << "\t" << I.instStr << endl;
+                }
+                    
 
             }
 
