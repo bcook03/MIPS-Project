@@ -179,7 +179,7 @@ int main(int argc, char* argv[] )
     int R[32] = {0};
     int cycle = 1;
     breakVal = true;
-    while( breakVal || cycle <= 32 ){
+    while( breakVal && cycle <= 32 ){
 
         item I = MEM[PC];
         if (I.valid == 0 ){
