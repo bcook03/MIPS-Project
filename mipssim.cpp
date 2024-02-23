@@ -60,8 +60,8 @@ int main(int argc, char* argv[] )
             I.rd = (asUint << 16) >> 27;
             I.sa = (asUint << 21) >> 27;
 
-            I.instr_index = (asUint << 6) >> 6;
-            I.offset = (asUint << 16) >> 16;
+            I.instr_index = (asUint << 26) >> 24;
+            I.offset = asUint << 20 >> 18;
 
             if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
@@ -71,46 +71,46 @@ int main(int argc, char* argv[] )
             else{
                 if (I.opcode == 34 ) {
                     I.instStr = "J\t#" + to_string(I.instr_index);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if (I.opcode == 32 && I.funct == 8) {
                     I.instStr = "JR\tR" + to_string(I.rs);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" <<I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if ( I.opcode == 33 && I.rt == 0) {
                     I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if ( I.opcode ==  36) {
                     I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if ( I.opcode == 32 && I.funct == 32) {
                     I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if( I.opcode == 40 ){
                     if (I.imm > 300) {
                         I.imm = -1;
                     }
                     I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 60 && I.funct == 2){
                     I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct == 36) {
                     I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct ==37) {
                     I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
@@ -119,50 +119,50 @@ int main(int argc, char* argv[] )
                 }
                 else if(I.opcode == 32 && I.funct == 5) {
                     I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.sa == 0 && I.funct == 0) {
                     I.instStr = "NOP";
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct == 34) {
                     I.instStr = "SUB\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt); 
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 43){
                     I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + "(R" + to_string(I.rs) + ')';
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 35){
                     I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + "(R" + to_string(I.rs) + ')';
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
                     I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     // it shifts left
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 32 && I.funct == 2){
                     I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     //it shifts right
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                     }
                 else if (I.opcode == 32 && I.funct == 13) {
                     breakVal = false;
                     I.instStr = "BREAK";
-                    disout << I.binstr << " " << addr << I.instStr << endl; 
-                    cout << I.binstr << " " << addr << " " << I.instStr << endl;
+                    disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                     
 
