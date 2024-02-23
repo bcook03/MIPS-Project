@@ -281,6 +281,7 @@ int main(int argc, char* argv[] )
                 cout << to_string(MEM[i].rt) << "\t";
             
         }
+        cout << endl << endl;
 
                 
         simout << "==================\ncycle: " + to_string(cycle)
@@ -312,6 +313,7 @@ int main(int argc, char* argv[] )
                 simout << to_string(MEM[i].rt) << "\t";
                 
             }
+        simout << endl << endl;
         if (breakVal == false)
             break;
         PC += 4;
