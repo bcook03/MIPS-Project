@@ -181,7 +181,7 @@ int main(int argc, char* argv[] )
     int R[32] = {0};
     int cycle = 1;
     breakVal = true;
-    while( breakVal ){
+    while( breakVal &&  ){
 
         item I = MEM[PC];
         if (I.valid == 0 ){
@@ -251,7 +251,7 @@ int main(int argc, char* argv[] )
             else if(I.opcode == 32 && I.funct == 2){
                 R[I.rd] = R[I.rt] >> I.sa;
             }
-            else if (I.opcode == 32 && I.funct == 13){
+            if (I.opcode == 32 && I.funct == 13){
                 breakVal = false;
             }
 
