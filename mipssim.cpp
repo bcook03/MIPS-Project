@@ -134,13 +134,13 @@ int main(int argc, char* argv[] )
                 }
 
                 else if(I.opcode == 43){
-                    I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + "(R" + to_string(I.rs) + ')';
+                    I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.imm) + "(R" + to_string(I.rs) + ')';
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 35){
-                    I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + "(R" + to_string(I.rs) + ')';
+                    I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.imm) + "(R" + to_string(I.rs) + ')';
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
@@ -235,11 +235,11 @@ int main(int argc, char* argv[] )
             R[I.rd] = R[I.rs] - R[I.rt];
             }
             else if(I.opcode == 43){
-                MEM[I.rs + I.offset].rt = R[I.rt];
+                MEM[I.rs + I.imm].rt = R[I.rt];
             }
 
             else if(I.opcode == 35){
-                R[I.rt] = MEM[I.rs + I.offset].rt;
+                R[I.rt] = MEM[I.rs + I.imm].rt;
             }
 
             else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
