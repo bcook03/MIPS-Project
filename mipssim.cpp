@@ -184,7 +184,7 @@ int main(int argc, char* argv[] )
     while( breakVal ){
 
         item I = MEM[PC];
-        if (I.valid == 0 ){
+        if (I.valid == 0 && cycle <= 144 ){
             PC += 4;
             I = MEM[PC];
         }
