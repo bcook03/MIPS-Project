@@ -257,7 +257,7 @@ int main(int argc, char* argv[] )
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
         for (int i = 0; i < 32; i++) {
             cout << to_string(R[i]) << "\t";
-                if (i % 8 == 0 && i > 0) {
+                if (i % 7 == 0 && i > 0) {
                     cout << endl;
                 }
             }
@@ -265,7 +265,7 @@ int main(int argc, char* argv[] )
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
                 for (int i = 0; i < 32; i++) {
                     simout << to_string(R[i]) << "\t";
-                    if (i % 8 == 0 && i > 0){
+                    if (i % 7 == 0 && i > 0){
                         simout << endl;
                     }
        

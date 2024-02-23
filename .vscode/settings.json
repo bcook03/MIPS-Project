@@ -59,7 +59,8 @@
   "files.associations": {
     "*.embeddedhtml": "html",
     "iostream": "cpp",
-    "bitset": "cpp"
+    "bitset": "cpp",
+    "ostream": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
