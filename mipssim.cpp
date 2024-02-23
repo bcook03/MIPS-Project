@@ -249,7 +249,7 @@ int main(int argc, char* argv[] )
             else if(I.opcode == 32 && I.funct == 2){
                 R[I.rd] = R[I.rt] >> I.sa;
             }
-            else if (I.opcode == 0 && I.funct == 13){
+            else if (I.opcode == 32 && I.funct == 13){
                 breakVal = false;
             }
 
