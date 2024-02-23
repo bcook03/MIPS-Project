@@ -308,7 +308,7 @@ int main(int argc, char* argv[] )
                     else if (i == 236) {
                         simout << endl << "236:\t";
                     }
-                    simout << to_string(MEM[i]) << "\t";
+                    simout << to_string(MEM[i].rt) << "\t";
                     
                 }
         if (breakVal == false)
