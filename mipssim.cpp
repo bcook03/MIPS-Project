@@ -179,7 +179,7 @@ int main(int argc, char* argv[] )
     int R[32] = {0};
     int cycle = 1;
     breakVal = true;
-    while( breakVal ){
+    while( breakVal || cycle <= 32 ){
 
         item I = MEM[PC];
         if (I.valid == 0 ){
@@ -256,7 +256,7 @@ int main(int argc, char* argv[] )
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
         for (int i = 1; i <= 32; i++) {
-            cout << to_string(R[i]) << "\t";
+            cout << to_string(R[i-1]) << "\t";
                 if (i % 8 == 0) {
                     cout << endl;
                 }
@@ -264,7 +264,7 @@ int main(int argc, char* argv[] )
         simout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
                 for (int i = 1; i <= 32; i++) {
-                    cout << to_string(R[i]) << "\t";
+                    cout << to_string(R[i-1]) << "\t";
                     if (i % 8 == 0){
                         cout << endl;
                     }
