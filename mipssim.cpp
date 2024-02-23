@@ -235,11 +235,11 @@ int main(int argc, char* argv[] )
             R[I.rd] = R[I.rs] - R[I.rt];
             }
             else if(I.opcode == 43){
-                MEM[I.rs + I.imm].rt = R[I.rt];
+                MEM[I.rs + I.imm].funct = R[I.rt];
             }
 
             else if(I.opcode == 35){
-                R[I.rt] = MEM[I.rs + I.imm].rt;
+                R[I.rt] = MEM[I.rs + I.imm].funct;
             }
 
             else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
@@ -278,7 +278,7 @@ int main(int argc, char* argv[] )
                 else if (i == 236) {
                     cout << endl << "236:\t";
                 }
-                cout << to_string(MEM[i].rt) << "\t";
+                cout << to_string(MEM[i].funct) << "\t";
             
         }
         cout << endl << endl;
@@ -310,7 +310,7 @@ int main(int argc, char* argv[] )
                 else if (i == 236) {
                     simout << endl << "236:\t";
                 }
-                simout << to_string(MEM[i].rt) << "\t";
+                simout << to_string(MEM[i].funct) << "\t";
                 
             }
         simout << endl << endl;
