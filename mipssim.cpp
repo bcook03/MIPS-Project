@@ -197,7 +197,9 @@ int main(int argc, char* argv[] )
                 PC = R[I.rs];
             }
             else if ( I.opcode == 33 && R[I.rt] == 0) {
-                PC += I.offset;
+                if (R[I.rs] < 0) {
+                    PC = I.offset - 4;
+                }
             }
             else if (I.opcode == 32 && I.funct == 32) {
                 R[I.rd] = R[I.rs] + R[I.rt];
