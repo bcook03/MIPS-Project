@@ -30,7 +30,7 @@ int main(int argc, char* argv[] )
     int addr = 96;
     int amt = 4;
     item MEM[500];
-    while( !disout.eof() )
+    while( breakVal )
     {
         
         amt = read(FD, buffer, 4);
@@ -179,7 +179,7 @@ int main(int argc, char* argv[] )
     int R[32] = {0};
     int cycle = 1;
     breakVal = true;
-    while( breakVal && cycle <= 144 ){
+    while( breakVal ){
 
         item I = MEM[PC];
         if (I.valid == 0 ){
