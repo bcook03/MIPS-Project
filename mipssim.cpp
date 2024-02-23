@@ -270,8 +270,10 @@ int main(int argc, char* argv[] )
                     }
        
                 }
+        if (breakVal == false)
+            break;
         PC += 4;
-        cycle++;
+        cycle += 1;
         }
         
     }
