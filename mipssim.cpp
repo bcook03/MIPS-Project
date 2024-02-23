@@ -26,12 +26,11 @@ int main(int argc, char* argv[] )
         unsigned int asUint;
         string instStr, binstr;
 
-
     };
     int addr = 96;
     int amt = 4;
     item MEM[500];
-    while( breakVal )
+    while( !disout.eof() )
     {
         
         amt = read(FD, buffer, 4);
@@ -172,7 +171,8 @@ int main(int argc, char* argv[] )
             addr+=4;
         }
     } 
-
+    
+    
     // end of decode
 
     int PC = 96;
