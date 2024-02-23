@@ -134,13 +134,13 @@ int main(int argc, char* argv[] )
                 }
 
                 else if(I.opcode == 43){
-                    I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + '(' + to_string(I.rs) + ')';
+                    I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + '(R' + to_string(I.rs) + ')';
                     disout << I.binstr << " " << addr << I.instStr << endl; 
                     cout << I.binstr << " " << addr << " " << I.instStr << endl;
                 }
 
                 else if(I.opcode == 35){
-                    I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + '(' + to_string(I.rs) + ')';
+                    I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.offset) + '(R' + to_string(I.rs) + ')';
                     disout << I.binstr << " " << addr << I.instStr << endl; 
                     cout << I.binstr << " " << addr << " " << I.instStr << endl;
                 }
