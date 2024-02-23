@@ -30,7 +30,7 @@ int main(int argc, char* argv[] )
     int addr = 96;
     int amt = 4;
     item MEM[500];
-    while( breakVal )
+    while( addr <= 264 )
     {
         
         amt = read(FD, buffer, 4);
@@ -67,7 +67,7 @@ int main(int argc, char* argv[] )
                 disout << I.binstr << "\t" << I.instStr << endl;
                 cout << I.binstr << "\t" << I.instStr << endl;
             }
-            else{
+            else if (breakVal){
                 if (I.opcode == 34 ) {
                     I.instStr = "J\t#" + to_string(I.instr_index);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
@@ -164,7 +164,9 @@ int main(int argc, char* argv[] )
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                     
-
+            }
+            else if (!breakVal) {
+                MEM[addr].funct = I.funct;
             }
 
             MEM[addr] = I;
