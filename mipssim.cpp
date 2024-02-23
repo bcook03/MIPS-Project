@@ -255,17 +255,17 @@ int main(int argc, char* argv[] )
 
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
-        for (int i = 1; i <= 32; i++) {
-            cout << to_string(R[i-1]) << "\t";
-                if (i % 8 == 0) {
+        for (int i = 0; i < 32; i++) {
+            cout << to_string(R[i]) << "\t";
+                if (i % 8 == 0 && i > 0) {
                     cout << endl;
                 }
             }
         simout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
-                for (int i = 1; i <= 32; i++) {
-                    cout << to_string(R[i-1]) << "\t";
-                    if (i % 8 == 0){
+                for (int i = 0; i < 32; i++) {
+                    cout << to_string(R[i]) << "\t";
+                    if (i % 8 == 0 && i > 0){
                         cout << endl;
                     }
        
