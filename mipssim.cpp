@@ -179,7 +179,7 @@ int main(int argc, char* argv[] )
     int R[32] = {0};
     int cycle = 1;
     breakVal = true;
-    while( breakVal && cycle <= 32 ){
+    while( breakVal && cycle <= 144 ){
 
         item I = MEM[PC];
         if (I.valid == 0 ){
@@ -254,7 +254,7 @@ int main(int argc, char* argv[] )
             }
 
         cout << "==================\ncycle: " + to_string(cycle)
-                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\nr00:\t";
+                + " \t" + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\nr00:\t";
                 for (int i = 1; i <= 32; i++) {
                     cout << to_string(R[i-1]) << "\t";
                         if (i % 8 == 0 && i!= 32 ) {
