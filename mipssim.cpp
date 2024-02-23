@@ -257,7 +257,7 @@ int main(int argc, char* argv[] )
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\nr00:\t";
                 for (int i = 1; i <= 32; i++) {
                     cout << to_string(R[i-1]) << "\t";
-                        if (i % 8 == 0) {
+                        if (i % 8 == 0 && i!= 32 ) {
                             cout << endl;
                             if (i < 10) {
                                 cout << "r0" << to_string(i) << ":\t";
@@ -267,20 +267,21 @@ int main(int argc, char* argv[] )
                             }
                         }
                 }
-                cout << "data:" << endl;
-                for (int i = 172; i <= 264; i+=4 ){
-                    if (i == 172) {
-                        cout << "172:\t";
-                    }
-                    else if (i == 204) {
-                        cout << endl << "204:\t";
-                    }
-                    else if (i == 236) {
-                        cout << endl << "236:\t";
-                    }
-                    cout << to_string(MEM[i].rt) << "\t";
-                    
+        cout << endl << "data:" << endl;
+            for (int i = 172; i <= 264; i+=4 ){
+                if (i == 172) {
+                    cout << "172:\t";
                 }
+                else if (i == 204) {
+                    cout << endl << "204:\t";
+                }
+                else if (i == 236) {
+                    cout << endl << "236:\t";
+                }
+                cout << to_string(MEM[i].rt) << "\t";
+            
+        }
+        cout << endl << endl;
                 
         simout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
@@ -297,20 +298,21 @@ int main(int argc, char* argv[] )
                     }
        
                 }
-                simout << "data:" << endl;
-                for (int i = 172; i <= 264; i+=4 ){
-                    if (i == 172) {
-                        simout << "172:\t";
-                    }
-                    else if (i == 204) {
-                        simout << endl << "204:\t";
-                    }
-                    else if (i == 236) {
-                        simout << endl << "236:\t";
-                    }
-                    simout << to_string(MEM[i].rt) << "\t";
-                    
+        simout << "\n\ndata:" << endl;
+            for (int i = 172; i <= 264; i+=4 ){
+                if (i == 172) {
+                    simout << "172:\t";
                 }
+                else if (i == 204) {
+                    simout << endl << "204:\t";
+                }
+                else if (i == 236) {
+                    simout << endl << "236:\t";
+                }
+                simout << to_string(MEM[i].rt) << "\t";
+                
+            }
+        cout << endl << endl;
         if (breakVal == false)
             break;
         PC += 4;
