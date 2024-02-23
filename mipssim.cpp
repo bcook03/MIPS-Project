@@ -278,7 +278,7 @@ int main(int argc, char* argv[] )
                     else if (i == 236) {
                         cout << endl << "236:\t";
                     }
-                    cout << to_string(MEM[i]) << "\t";
+                    cout << to_string(MEM[i].rt) << "\t";
                     
                 }
                 
