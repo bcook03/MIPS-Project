@@ -267,7 +267,7 @@ int main(int argc, char* argv[] )
                             }
                         }
                 }
-        cout << endl << "data:" << endl;
+        cout << "\n\ndata:" << endl;
             for (int i = 172; i <= 264; i+=4 ){
                 if (i == 172) {
                     cout << "172:\t";
@@ -281,7 +281,7 @@ int main(int argc, char* argv[] )
                 cout << to_string(MEM[i].rt) << "\t";
             
         }
-        cout << endl << endl;
+
                 
         simout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
@@ -312,7 +312,6 @@ int main(int argc, char* argv[] )
                 simout << to_string(MEM[i].rt) << "\t";
                 
             }
-        cout << endl << endl;
         if (breakVal == false)
             break;
         PC += 4;
