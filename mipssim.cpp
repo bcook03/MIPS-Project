@@ -168,7 +168,7 @@ int main(int argc, char* argv[] )
 
             }
 
-            MEM[addr].rt = I.rt;
+            MEM[addr] = I;
             addr+=4;
         }
     } 
