@@ -251,6 +251,8 @@ int main(int argc, char* argv[] )
                 breakVal = false;
             }
 
+       
+        }
         cout << "==================\ncycle: " + to_string(cycle)
                 + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
         for (int i = 1; i <= 32; i++) {
@@ -267,10 +269,9 @@ int main(int argc, char* argv[] )
                         cout << endl;
                     }
                 }
-        }
         PC += 4;
         cycle ++;
-        }
-       
     }
+       
+}
 
