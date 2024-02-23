@@ -271,7 +271,7 @@ int main(int argc, char* argv[] )
        
                 }
         PC += 4;
-        cycle ++;
+        cycle++;
         }
         
     }
