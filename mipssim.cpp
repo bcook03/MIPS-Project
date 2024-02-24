@@ -166,10 +166,10 @@ int main(int argc, char* argv[] )
                     
             }
             else if (!breakVal) {
-                if (I.opcode < 50 )
-                    MEM[addr].funct = I.funct;
+                if (I.opcode == 63 )
+                    MEM[addr].funct = I.funct -64;
                 else 
-                    MEM[addr].funct = I.funct - 64;
+                    MEM[addr].funct = I.funct;
             }
 
             MEM[addr] = I;
