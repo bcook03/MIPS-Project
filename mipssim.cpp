@@ -290,7 +290,11 @@ int main(int argc, char* argv[] )
                 else if (i == 236) {
                     cout << endl << "236:\t";
                 }
+                if (MEM[i].valid == 1)
+                cout << to_string(MEM[i].funct - 64) << "\t";
+                else 
                 cout << to_string(MEM[i].funct) << "\t";
+
             
         }
         cout << endl << endl;
@@ -322,6 +326,9 @@ int main(int argc, char* argv[] )
                 else if (i == 236) {
                     simout << endl << "236:\t";
                 }
+                if (MEM[i].valid == 1)
+                simout << to_string(MEM[i].funct - 64) << "\t";
+                else 
                 simout << to_string(MEM[i].funct) << "\t";
                 
             }
