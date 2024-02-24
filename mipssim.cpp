@@ -62,13 +62,15 @@ int main(int argc, char* argv[] )
             I.instr_index = (asUint << 26) >> 24;
             I.offset = asUint << 20 >> 18;
 
-            if (I.valid == 0){
+
+            if (breakVal){
+                if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
                 disout << I.binstr << "\t" << I.instStr << endl;
                 cout << I.binstr << "\t" << I.instStr << endl;
-            }
-            else if (breakVal){
-                if (I.opcode == 34 ) {
+                }
+           
+                else if (I.opcode == 34 ) {
                     I.instStr = "J\t#" + to_string(I.instr_index);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
@@ -166,7 +168,9 @@ int main(int argc, char* argv[] )
                     
             }
             else if (!breakVal) {
-                
+                if (I.valid == 0)
+                    MEM[addr].funct = I.funct - 64;
+                else 
                     MEM[addr].funct = I.funct;
             }
 
