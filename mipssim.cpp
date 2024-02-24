@@ -30,7 +30,7 @@ int main(int argc, char* argv[] )
     int addr = 96;
     int amt = 4;
     item MEM[500];
-    while( addr <= 264 )
+    while( addr <= 264 || breakVal )
     {
         
         amt = read(FD, buffer, 4);
