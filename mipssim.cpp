@@ -168,15 +168,15 @@ int main(int argc, char* argv[] )
                     
             }
             else if (!breakVal) {
-                if (I.valid == 0) {
+                if (I.valid == 1) {
                     MEM[addr].funct = I.funct - 64;
                 }
                 else {
                     MEM[addr].funct = I.funct;
                 }
 
-                disout << I.binstr << "\t" << addr << "\t" << MEM[addr].funct;
-                cout << I.binstr << "\t" << addr << "\t" << MEM[addr].funct;
+                disout << I.binstr << "\t" << addr << "\t" << MEM[addr].funct << endl;
+                cout << I.binstr << "\t" << addr << "\t" << MEM[addr].funct << endl;
             }
 
             MEM[addr] = I;
