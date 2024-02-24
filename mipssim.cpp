@@ -30,7 +30,7 @@ int main(int argc, char* argv[] )
     int addr = 96;
     int amt = 4;
     item MEM[500];
-    while( addr <= 264 || breakVal )
+    while( addr <= 264 )
     {
         
         amt = read(FD, buffer, 4);
@@ -166,9 +166,7 @@ int main(int argc, char* argv[] )
                     
             }
             else if (!breakVal) {
-                if (I.opcode == 63 )
-                    MEM[addr].funct = I.funct -64;
-                else 
+                
                     MEM[addr].funct = I.funct;
             }
 
