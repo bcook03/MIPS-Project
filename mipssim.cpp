@@ -169,7 +169,7 @@ int main(int argc, char* argv[] )
                 if (I.opcode < 63 )
                     MEM[addr].funct = I.funct;
                 else 
-                    MEM[addr].funct = I.funct - 63;
+                    MEM[addr].funct = I.funct - 64;
             }
 
             MEM[addr] = I;
