@@ -318,7 +318,7 @@ int main(int argc, char* argv[] )
        
                 }
         simout << "\n\ndata:" << endl;
-            for (int i = 172; i <= 264; i+=4 ){
+            for (int i = dataStart; i <= dataEnd; i+=4 ){
                 if (i == 172) {
                     simout << "172:\t";
                 }
@@ -344,17 +344,28 @@ int main(int argc, char* argv[] )
             break;
     }
        
-}
 
-/* didBreak = false;
- int preissu[4] = {0};
+
+ didBreak = false;
+ int preissue[4] = {0};
  int premem[2] = {0};
  int preALU[2] = {0};
  int postmem = 0;
  int postalu = 0;
 
+struct line {
+    int validBit, dirtyBit, tag, data;
+};struct entry {
+    line Line[2] = {0};
+};
+struct set {
+    int LRUbit;
+    entry Entry[2] = {0};
+
+};
+
  struct fetch{
-    void run(){
+    void run(int preissue[], bool didBreak, item MEM[], int PC){
         for (int i = 0; i < 2; i++) {
             if (preissue[4] != 0) break;
             if (didBreak) break;
@@ -374,11 +385,12 @@ int main(int argc, char* argv[] )
 
 
  while(true){
-    WB.run();
-    MEM.run();
-    ALU.run();
-    ISSUE.run();
-    FETCH.run();
+    // WB.run();
+    // MEM.run();
+    // ALU.run();
+    // ISSUE.run();
+    FETCH.run(preissue, didBreak, MEM, PC);
     //print state
 // can u see this
     
+ }
