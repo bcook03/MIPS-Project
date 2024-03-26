@@ -22,15 +22,17 @@ int main(int argc, char* argv[] )
     ofstream simout(string (argv[4]) + "_sim.txt");
 
     struct item{
-        int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa;
+        int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa, opp1, opp2, dest;
         unsigned int asUint;
-        string instStr, binstr;
+        string instStr, binstr, binStrSpace;
 
     };
+    bool didBreak = false;
     int addr = 96;
     int amt = 4;
+    int dataStart, dataEnd;+
     item MEM[500];
-    while( addr <= 264 )
+    while ( amt != 0 )
     {
         
         amt = read(FD, buffer, 4);
@@ -48,6 +50,9 @@ int main(int argc, char* argv[] )
 
             bitset<32> b( i );
             I.binstr = b.to_string();
+            I.binStrSpace = I.binStr;
+            I.binStrSpace.insert(26, " "), I.binStrSpace.insert(21, " "), I.binStrSpace.insert(16, " "),
+            I.binStrSpace.insert(11, " "), I.binStrSpace.insert(6, " "), I.binStrSpace.insert(1, " ");
             
             I.valid = asUint >> 31;
             I.opcode = asUint >> 26;
@@ -63,7 +68,11 @@ int main(int argc, char* argv[] )
             I.offset = asUint << 20 >> 18;
 
 
-            if (breakVal){
+                if (didBreak) {
+                {
+                    I.instrStr = to_string(i);
+                    I.binStrSpace = I.binStr;
+                }
                 if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
                 disout << I.binstr << "\t" << I.instStr << endl;
@@ -160,29 +169,22 @@ int main(int argc, char* argv[] )
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                     }
                 else if (I.opcode == 32 && I.funct == 13) {
-                    breakVal = false;
-                    I.instStr = "BREAK";
+                    I.instrStr = "BREAK";
+                    didBreak = true;
+                    dataStart = addr + 4;
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                     
             }
-            else if (!breakVal) {
-                if (I.valid == 1) {
-                    MEM[addr].funct = I.funct - 64;
-                }
-                else {
-                    MEM[addr].funct = I.funct;
-                }
-
-                disout << I.binstr << "\t" << addr << "\t" << MEM[addr].funct << endl;
-                cout << I.binstr << "\t" << addr << "\t" << MEM[addr].funct << endl;
-            }
+            
 
             MEM[addr] = I;
             addr+=4;
         }
+        
     } 
+    dataEnd = addr;
     
     
     // end of decode
@@ -261,7 +263,7 @@ int main(int argc, char* argv[] )
             else if(I.opcode == 32 && I.funct == 2){
                 R[I.rd] = R[I.rt] >> I.sa;
             }
-            if (I.opcode == 32 && I.funct == 13){
+            else if (I.opcode == 32 && I.funct == 13){
                 breakVal = false;
             }
 
@@ -344,3 +346,38 @@ int main(int argc, char* argv[] )
        
 }
 
+/* didBreak = false;
+ int preissu[4] = {0};
+ int premem[2] = {0};
+ int preALU[2] = {0};
+ int postmem = 0;
+ int postalu = 0;
+
+ struct fetch{
+    void run(){
+        for (int i = 0; i < 2; i++) {
+            if (preissue[4] != 0) break;
+            if (didBreak) break;
+            item I = MEM[PC];
+
+            // if I is branch or jump, try to do it then break
+
+            // else move I to next open spot in preissue
+
+        }
+
+    }
+
+ };
+
+ fetch FETCH;
+
+
+ while(true){
+    WB.run();
+    MEM.run();
+    ALU.run();
+    ISSUE.run();
+    FETCH.run();
+    //print state
+    
