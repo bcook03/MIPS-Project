@@ -1,3 +1,8 @@
 Brennan Cook brecook@siue.edu
 Brandon Haynes brhayne@siue.edu
 Emmorie Brown emmobro@siue.edu
+
+1. Load makefile and mipssim.cpp to directory
+2. enter "make" to run the program
+3. enter "./mipssim -i <INPUTFILE> -o <OUTPUTFILENAME>" to enter input file and output file name.
+4. enter "nano <OUTPUTFILENAME>_dis.txt" and "nano <OUTPUTFILENAME>_sim.txt" to view output files
