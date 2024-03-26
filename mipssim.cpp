@@ -19,7 +19,7 @@ int main(int argc, char* argv[] )
 
     int FD = open(argv[2], O_RDONLY);
     ofstream disout(string (argv[4]) + "_dis.txt");
-    ofstream simout(string (argv[4]) + "_sim.txt");
+    ofstream simout(string (argv[4]) + "_pipeline.txt");
 
     struct item{
         int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa, opp1, opp2, dest;
@@ -30,7 +30,7 @@ int main(int argc, char* argv[] )
     bool didBreak = false;
     int addr = 96;
     int amt = 4;
-    int dataStart, dataEnd;+
+    int dataStart, dataEnd;
     item MEM[500];
     while ( amt != 0 )
     {
