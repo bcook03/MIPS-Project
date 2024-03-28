@@ -364,6 +364,8 @@ struct set {
 
 };
 
+set cache[4] = {0};
+
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC){
         for (int i = 0; i < 2; i++) {
@@ -394,4 +396,3 @@ struct set {
 // can u see this
     
  }
-}
