@@ -393,6 +393,16 @@ set cache[4] = {0};
     // ISSUE.run();
     FETCH.run(preissue, didBreak, MEM, PC);
     //print state
-// can u see this
+    /*
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    */
     
  }
