@@ -394,15 +394,17 @@ set cache[4] = {0};
     FETCH.run(preissue, didBreak, MEM, PC);
     //print state
     /*
+    if(entry.is_empty){
+        cout << 
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     */
     
  }
