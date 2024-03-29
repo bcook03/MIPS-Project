@@ -369,7 +369,9 @@ set cache[4] = {0};
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC){
         for (int i = 0; i < 2; i++) {
+            //checks if there is room at pre-issue
             if (preissue[4] != 0) break;
+            //checks if a break instruction was fetched
             if (didBreak) break;
             item I = MEM[PC];
 
