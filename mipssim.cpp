@@ -371,14 +371,27 @@ set cache[4] = {0};
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
             if (preissue[4] != 0) break;
-            //checks if a break instruction was fetched
+            //checks if a break instruction was fetched which stalls fetch by breaking
             if (didBreak) break;
             item I = MEM[PC];
 
             // if I is branch or jump, try to do it then break
+            //BLTZ opcode 000001(1)
+            if((I.opcode == 1)){
 
+            }
+            // J opcode 000010(2)
+            else if(I.opcode == 2){
+
+            }
+            //JR opcode 001000(8)
+            else if (I.opcode == 8){
+
+            }
             // else move I to next open spot in preissue
-
+            else {
+                I += 4;
+            }
         }
 
     }
