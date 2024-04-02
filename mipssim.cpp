@@ -370,7 +370,7 @@ set cache[4] = {0};
     void run(item preissue[], bool didBreak, item MEM[], int PC){
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
-            if (preissue[4].asUint != 0) break;
+            if (preissue[3].asUint != 0) break;
             //checks if a break instruction was fetched which stalls fetch by breaking
             if (didBreak) break;
             item I = MEM[PC];
