@@ -377,16 +377,23 @@ set cache[4] = {0};
 
             // if I is branch or jump, try to do it then break
             //BLTZ opcode 000001(1)
-            if((I.opcode == 1)){
-
+            if((I.opcode == 33 && R[I.rt] == 0)){
+                //want to find target address and break and check if it is taken
+                if (R[I.rs] > 0){
+                    PC = I.offset; 
+                }
+                break;
             }
             // J opcode 000010(2)
-            else if(I.opcode == 2){
-
+            else if(I.opcode == 34){
+                //goes here
+                PC = I.instr_index;
+                break;
             }
             //JR opcode 001000(8)
-            else if (I.opcode == 8){
-
+            else if (I.opcode == 32 && I.funct == 8){
+                PC = R[I.rs];
+                break;
             }
             // else move I to next open spot in preissue
             else {
