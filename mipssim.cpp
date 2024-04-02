@@ -347,11 +347,11 @@ int main(int argc, char* argv[] )
 
 
  didBreak = false;
- int preissue[4] = {0};
- int premem[2] = {0};
- int preALU[2] = {0};
- int postmem = 0;
- int postalu = 0;
+ item preissue[4] = {0};
+ item premem[2] = {0};
+ item preALU[2] = {0};
+ item postmem = 0;
+ item postalu = 0;
 
 struct line {
     int validBit, dirtyBit, tag, data;
@@ -390,8 +390,11 @@ set cache[4] = {0};
             }
             // else move I to next open spot in preissue
             else {
-                I += 4;
-            }
+                for (int j = 0; j < 4; j++) {
+                    if (preissue[j] == 0)
+                        preissue[j] = I;
+
+                }
         }
 
     }
