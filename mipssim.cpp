@@ -367,10 +367,10 @@ struct set {
 set cache[4] = {0};
 
  struct fetch{
-    void run(int preissue[], bool didBreak, item MEM[], int PC){
+    void run(item preissue[], bool didBreak, item MEM[], int PC){
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
-            if (preissue[4] != 0) break;
+            if (preissue[4].asUint != 0) break;
             //checks if a break instruction was fetched which stalls fetch by breaking
             if (didBreak) break;
             item I = MEM[PC];
@@ -398,8 +398,8 @@ set cache[4] = {0};
             // else move I to next open spot in preissue
             else {
                 for (int j = 0; j < 4; j++) {
-                    if (preissue[j] == 0)
-                        preissue[j] = I.asUint;
+                    if (preissue[j].asUint == 0)
+                        preissue[j] = I;
 
                 }
         }
@@ -433,4 +433,5 @@ set cache[4] = {0};
     */
     
  }
+}
 }
