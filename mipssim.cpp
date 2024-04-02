@@ -392,7 +392,7 @@ set cache[4] = {0};
             else {
                 for (int j = 0; j < 4; j++) {
                     if (preissue[j] == 0)
-                        preissue[j] = I;
+                        preissue[j] = I.asUint;
 
                 }
         }
