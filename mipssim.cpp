@@ -400,6 +400,7 @@ set cache[4] = {0};
                 for (int j = 0; j < 4; j++) {
                     if (preissue[j].asUint == 0)
                         preissue[j] = I;
+                        break;
 
                 }
         }
