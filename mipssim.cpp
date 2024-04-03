@@ -395,6 +395,11 @@ set cache[4] = {0};
                 PC = R[I.rs];
                 break;
             }
+            //BREAK opcode 001101(13)
+            else if (I.opcode == 32 && I.funct == 13){
+                didBreak = true;
+                break;
+            }
             // else move I to next open spot in preissue
             else {
                 for (int j = 0; j < 4; j++) {
@@ -408,15 +413,19 @@ set cache[4] = {0};
     }
 
  };
+ struct issue {
+    void run(item preissue[], item preALU[], item premem[])
+ };
 
  fetch FETCH;
+ issue ISSUE;
 
 
- while(true){
+ while(!didBreak){
     // WB.run();
     // MEM.run();
     // ALU.run();
-    // ISSUE.run();
+    ISSUE.run(preIssue, preALU, premem);
     FETCH.run(preissue, didBreak, MEM, PC);
     //print state
     /*
