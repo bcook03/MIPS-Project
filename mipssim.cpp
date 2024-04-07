@@ -26,6 +26,30 @@ int main(int argc, char* argv[] )
         unsigned int asUint;
         string instStr, binstr, binStrSpace;
 
+        item& operator=(const item& preissue) {
+        i = preissue.i; 
+        rs = preissue.rs;
+        rt = preissue.rt;
+        rd = preissue.rd; 
+        imm = preissue.imm;
+        opcode = preissue.opcode;
+        valid = preissue.valid;
+        instr_index = preissue.instr_index;
+        funct = preissue.funct;
+        hint = preissue.hint;
+        offset = preissue.offset;
+        sa = preissue.sa;
+        opp1 = preissue.opp1;
+        opp2 = preissue.opp2;
+        dest = preissue.dest;
+        asUint = preissue.asUint;
+        instStr = preissue.instStr;
+        binstr = preissue.binstr;
+        binStrSpace = preissue.binStrSpace;
+
+        return *this;
+    }
+
     };
     bool didBreak = false;
     int addr = 96;
@@ -50,7 +74,7 @@ int main(int argc, char* argv[] )
 
             bitset<32> b( i );
             I.binstr = b.to_string();
-            I.binStrSpace = I.binStr;
+            I.binStrSpace = I.binstr;
             I.binStrSpace.insert(26, " "), I.binStrSpace.insert(21, " "), I.binStrSpace.insert(16, " "),
             I.binStrSpace.insert(11, " "), I.binStrSpace.insert(6, " "), I.binStrSpace.insert(1, " ");
             
@@ -70,8 +94,8 @@ int main(int argc, char* argv[] )
 
                 if (didBreak) {
                 {
-                    I.instrStr = to_string(i);
-                    I.binStrSpace = I.binStr;
+                    I.instStr = to_string(i);
+                    I.binStrSpace = I.binstr;
                 }
                 if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
@@ -169,7 +193,7 @@ int main(int argc, char* argv[] )
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                     }
                 else if (I.opcode == 32 && I.funct == 13) {
-                    I.instrStr = "BREAK";
+                    I.instStr = "BREAK";
                     didBreak = true;
                     dataStart = addr + 4;
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
@@ -350,8 +374,8 @@ int main(int argc, char* argv[] )
  item preissue[4] = {0};
  item premem[2] = {0};
  item preALU[2] = {0};
- item postmem = 0;
- item postalu = 0;
+ item postmem = {0};
+ item postalu = {0};
 
 struct line {
     int validBit, dirtyBit, tag, data;
@@ -409,38 +433,55 @@ set cache[4] = {0};
                         break;
 
                 }
+            }
+        
+
         }
-        bool checkRBW(item premem[], item preALU[], item preIssue[]) {
-            for (int i = 0; i < 4; i++) {
-                for (int j = 0; j < 2; j++) {
-                     if (preIssue[i].rs == premem[j].rs || preIssue[i].rs == preALU[j].rs){
-                            return true
-                     }
-                     else {
-                        return false;
-                     }
+    }
+    bool checkRBW(item premem[], item preALU[], item preIssue[]) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 2; j++) {
+                    if (preIssue[i].rs == premem[j].rs || preIssue[i].rs == preALU[j].rs){
+                        return true;
+                    }
+                    else {
+                    return false;
                 }
             }
         }
     }
+    
 
- };
+};
  struct issue {
     void run(item preissue[], item preALU[], item premem[]) {
-
+        for(int i = 0; i < 4; i++) {
+            if (preALU[1].asUint != 0 && premem[1].asUint != 0) break;
+            for (int j = 0; j < 2; j++) {
+                if ((preissue[i].opcode == 35 || preissue[i].opcode == 43) && premem[j].asUint == 0) {
+                    premem[j] == preissue[i];
+                    preissue[i] == new item;
+                }
+                else if (preALU[j].asUint == 0) {
+                    preALU[j] == preissue[i];
+                    preissue[i] == new item;
+                }
+            }
+        }
     };
+    
  };
 
  fetch FETCH;
  issue ISSUE;
 
-bool RBW_ErrorFound
+bool RBW_ErrorFound;
  while(!didBreak){
     // WB.run();
     // MEM.run();
     // ALU.run();
-    ISSUE.run(preIssue, preALU, premem);
-    RBW_ErrorFound = FETCH.checkRBW(premem, preALU, preIssue);
+    ISSUE.run(preissue, preALU, premem);
+    RBW_ErrorFound = FETCH.checkRBW(premem, preALU, preissue);
     FETCH.run(preissue, didBreak, MEM, PC,R, RBW_ErrorFound);
     //print state
     /*
@@ -459,4 +500,4 @@ bool RBW_ErrorFound
     
  }
 }
-}
+
