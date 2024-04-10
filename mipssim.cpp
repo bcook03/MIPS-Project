@@ -427,7 +427,7 @@ set cache[4] = {0};
             }
         }
     }
-
+    // write-after-read hazards
     /*bool XBW( int rNum, int index ){
 	for( int i = 0; i < index; i++ ) {
 		if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
