@@ -530,7 +530,37 @@ bool RBW_ErrorFound;
     //print state
     /*
     if(entry.is_empty){
-        cout << 
+        cout << "print as it was for project 1" << endl;
+    }
+    else {
+        cout << "--------------------\n";
+        cout << "Cycle" << value = [cycle];
+        <blank_line>
+        Pre-issue buffer:
+        cout << \t << "Entry 0: \t" [instruction]
+        cout << \t << "Entry 1: \t" [instruction]
+        cout << \t << "Entry 2: \t" [instruction]
+        cout << \t << "Entry 3: \t" [instruction]
+
+        cout << "Pre_ALU Queue: ";
+
+        cout << \t << "Entry 0: \t" [instruction]
+        cout << \t << "Entry 1: \t" [instruction]
+
+        cout << "Post_ALU Queue: ";
+        cout << \t << "Entry 0: \t" [instruction]
+        
+        cout << "Pre_MEM Queue: ";
+        cout << \t << "Entry 0: \t" [instruction]
+        cout << \t << "Entry 1: \t" [instruction]
+       
+        cout << "Post_ALU Queue: ";
+        cout << \t << "Entry 0: \t" [instruction]
+        < blank_line>
+        cout << "Registers\n";
+        cout << "R00:" << \t << int(R0) << \t << int(R1) << ".." << \t << int(R7) << endl;
+        
+
     }
     
 
@@ -539,7 +569,7 @@ bool RBW_ErrorFound;
 
 
 
-
+ALU and memory 
     */
     
  }
