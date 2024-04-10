@@ -367,8 +367,8 @@ struct set {
 set cache[4] = {0};
 
  struct fetch{
-    void run(int preissue[], bool didBreak, item MEM[], int PC, int R[], bool RBW_ERRORFOUND){
-        while(!RBW_ERRORFOUND)
+    void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
+        while(!didBreak)
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
             if (preissue[3] != 0) break;
@@ -414,6 +414,7 @@ set cache[4] = {0};
 
         }
     }
+ };
     bool checkRBW(int premem[], int preALU[], int preIssue[]) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
@@ -449,7 +450,7 @@ set cache[4] = {0};
    }
    */
 
-};
+
  struct issue {
     void run(int preissue[], int preALU[], int premem[]) {
         for(int i = 0; i < 4; i++) {
@@ -525,8 +526,8 @@ bool RBW_ErrorFound;
     // MEM.run();
     // ALU.run();
     ISSUE.run(preissue, preALU, premem);
-    RBW_ErrorFound = FETCH.checkRBW(premem, preALU, preissue);
-    FETCH.run(preissue, didBreak, MEM, PC,R, RBW_ErrorFound);
+    
+    FETCH.run(preissue, didBreak, MEM, PC,R);
     //print state
     /*
     if(entry.is_empty){
