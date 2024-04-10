@@ -26,30 +26,6 @@ int main(int argc, char* argv[] )
         unsigned int asUint;
         string instStr, binstr, binStrSpace;
 
-        item& operator=(const item& preissue) {
-        i = preissue.i; 
-        rs = preissue.rs;
-        rt = preissue.rt;
-        rd = preissue.rd; 
-        imm = preissue.imm;
-        opcode = preissue.opcode;
-        valid = preissue.valid;
-        instr_index = preissue.instr_index;
-        funct = preissue.funct;
-        hint = preissue.hint;
-        offset = preissue.offset;
-        sa = preissue.sa;
-        opp1 = preissue.opp1;
-        opp2 = preissue.opp2;
-        dest = preissue.dest;
-        asUint = preissue.asUint;
-        instStr = preissue.instStr;
-        binstr = preissue.binstr;
-        binStrSpace = preissue.binStrSpace;
-
-        return *this;
-    }
-
     };
     bool didBreak = false;
     int addr = 96;
@@ -371,11 +347,11 @@ int main(int argc, char* argv[] )
 
 
  didBreak = false;
- item preissue[4] = {0};
- item premem[2] = {0};
- item preALU[2] = {0};
- item postmem = {0};
- item postalu = {0};
+ int preissue[4] = {0};
+ int premem[2] = {0};
+ int preALU[2] = {0};
+ int postmem = {0};
+ int postalu = {0};
 
 struct line {
     int validBit, dirtyBit, tag, data;
@@ -391,11 +367,11 @@ struct set {
 set cache[4] = {0};
 
  struct fetch{
-    void run(item preissue[], bool didBreak, item MEM[], int PC, int R[], bool RBW_ERRORFOUND){
+    void run(int preissue[], bool didBreak, item MEM[], int PC, int R[], bool RBW_ERRORFOUND){
         while(!RBW_ERRORFOUND)
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
-            if (preissue[3].asUint != 0) break;
+            if (preissue[3] != 0) break;
             //checks if a break instruction was fetched which stalls fetch by breaking
             if (didBreak) break;
             item I = MEM[PC];
@@ -428,8 +404,8 @@ set cache[4] = {0};
             // else move I to next open spot in preissue
             else {
                 for (int j = 0; j < 4; j++) {
-                    if (preissue[j].asUint == 0)
-                        preissue[j] = I;
+                    if (preissue[j] == 0)
+                        preissue[j] = I.asUint;
                         break;
 
                 }
@@ -438,10 +414,10 @@ set cache[4] = {0};
 
         }
     }
-    bool checkRBW(item premem[], item preALU[], item preIssue[]) {
+    bool checkRBW(int premem[], int preALU[], int preIssue[]) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
-                    if (preIssue[i].rs == premem[j].rs || preIssue[i].rs == preALU[j].rs){
+                    if (preIssue[i] == premem[j] || preIssue[i] == preALU[j]){
                         return true;
                     }
                     else {
@@ -450,28 +426,74 @@ set cache[4] = {0};
             }
         }
     }
-    
+
+    /*bool XBW( int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU ){
+        for(int i=0; i < 4; i++){
+            if(MEM[preissue[i]].dest == rNum) return true;
+        }
+        for (int i = 0; i < 2; i++){
+            if(MEM[preALU[i]].dest == rNum) return true;
+        }
+        for (int i = 0; i < 2; i++){
+            if(MEM[premem[i]].dest == rNum)
+        }
+        if (postALU != 0 && MEM[])
+        
+    }
+    */
 
 };
  struct issue {
-    void run(item preissue[], item preALU[], item premem[]) {
+    void run(int preissue[], int preALU[], int premem[]) {
         for(int i = 0; i < 4; i++) {
-            if (preALU[1].asUint != 0 && premem[1].asUint != 0) break;
+            int preissue_opcode = preissue[i] >> 26;
+            if (preALU[1] != 0 && premem[1] != 0) break;
             for (int j = 0; j < 2; j++) {
-                if ((preissue[i].opcode == 35 || preissue[i].opcode == 43) && premem[j].asUint == 0) {
+                if ((preissue_opcode == 35 || preissue_opcode == 43) && premem[j] == 0) {
                     premem[j] == preissue[i];
-                    preissue[i] == new item;
                 }
-                else if (preALU[j].asUint == 0) {
+                else if (preALU[j] == 0) {
                     preALU[j] == preissue[i];
-                    preissue[i] == new item;
                 }
             }
         }
     };
     
  };
+ /*
+    struct issue{
+        void run(){
+            for(int i = 0; i < 4; i++){
+                if (preissue[i] == 0) continue;
+                item I = MEM[preissue[i]];
+                if (XBW( I.src1, i)) continue;
+                if (XBW(I.src2, i)) continue;
+                if (XBW(I.dest, i)) continue;
+                // WBR Check
+                if (LW or SW) {
+                    if (premem[1] != 0) continue;
+                    LW SW checcks
+                    issue
+                    preissue[i] = 0;
+                }
+                else {
+                    //
+                    issue
+                    preissue[i] = 0;
+                }
+            }
+            for (int k = 0; k < 4; k++)
+            for (int i = 3; i > 0; i--){
+                if(preissue[i-1] == 0){
+                    preissue[i-1] = preissue[i];
+                    preissue[i] = 0;
+                }
+            }
+        }
+    }
 
+ */
+ 
  fetch FETCH;
  issue ISSUE;
 
