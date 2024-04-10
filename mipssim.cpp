@@ -428,19 +428,20 @@ set cache[4] = {0};
         }
     }
 
-    /*bool XBW( int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU ){
-        for(int i=0; i < 4; i++){
-            if(MEM[preissue[i]].dest == rNum) return true;
-        }
-        for (int i = 0; i < 2; i++){
-            if(MEM[preALU[i]].dest == rNum) return true;
-        }
-        for (int i = 0; i < 2; i++){
-            if(MEM[premem[i]].dest == rNum)
-        }
-        if (postALU != 0 && MEM[])
-        
-    }
+    /*bool XBW( int rNum, int index ){
+	for( int i = 0; i < index; i++ ) {
+		if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
+	}	
+	for( int i = 0; i < 2; i++ ) {
+		if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
+	}	
+	for( int i = 0; i < 2; i++ ) {
+		if( prealu[i] != 0 && MEM[prealu[i]].dest == rNum) return true;
+	}	
+	if( postalu != 0 && MEM[postalu].dest == rNum) return true;
+	if( postmem !=0 && MEM[postmem].dest == rNum) return true;
+	return false;
+}
     */
    /*
    bool WBR(int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU  ){
