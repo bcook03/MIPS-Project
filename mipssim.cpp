@@ -443,6 +443,7 @@ set cache[4] = {0};
 	return false;
 }
     */
+   // write-before-read hazard
    /*
    bool WBR(int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU  ){
         for(int i=0; i < 4; i++){
