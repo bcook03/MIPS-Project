@@ -471,6 +471,8 @@ set cache[4] = {0};
     
  };
  /*
+  Depending on the conditions, it either continues or updates the `preissue` array.
+- It rearranges elements in the `preissue` array based on certain conditions.
     struct issue{
         void run(){
             for(int i = 0; i < 4; i++){
@@ -504,6 +506,10 @@ set cache[4] = {0};
 
  */
 /*
+ Defines a struct `alu` with a method `run()`.
+- The `run()` method iterates through a loop of 2 elements.
+- It handles moving elements from `preALU` to `postALU` based on certain conditions.
+
     struct alu{
         void run(){
             for(int i = 0; i < 2; i++){
@@ -583,4 +589,7 @@ bool RBW_ErrorFound;
     
  }
 }
+
+
+
 
