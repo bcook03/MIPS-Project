@@ -506,27 +506,29 @@ set cache[4] = {0};
 /*
     struct alu{
         void run(int preALU[], bool didBreak, item MEM[], int PC, int R[]){
-            for(int i = 0; i < 2; i++){
-                if(postALU[0] != 0) break;
-                item I = MEM[PC];
-                //if there is nothing in the preALU, do nothing 
-                // if there is something in the preALU-move it to post, unless post is full
-                if(preALU[i] != 0){
-                    //ADDI MEM[I.rs + I.imm].funct = R[I.rt]
-                    if(I.opcode == 43){
-                        postALU[0] = R[I.rt]; // destination
-                        postALU[1] = MEM[I.rs + I.imm].funct;
+            if(preALU[0] != 0){
+                for(int i = 0; i < 2; i++){
+                    if(postALU[0] != 0) break;
+                    item I = MEM[PC];
+                    //if there is nothing in the preALU, do nothing 
+                    // if there is something in the preALU-move it to post, unless post is full
+                    if(preALU[i] != 0){
+                        //ADDI MEM[I.rs + I.imm].funct = R[I.rt]
+                        if(I.opcode == 43){
+                            postALU[0] = R[I.rt]; // destination
+                            postALU[1] = MEM[I.rs + I.imm].funct;
+                        }
+                        //ADD R[I.rd] = R[I.rs] + R[I.rt];
+                        if (I.opcode == 32 && I.funct == 32) {
+                            postALU[0] = R[I.rd] //destination
+                            postALU[1] = R[I.rs] + R[I.rt];
+                        }
+                    
                     }
-                    //ADD R[I.rd] = R[I.rs] + R[I.rt];
-                    if (I.opcode == 32 && I.funct == 32) {
-                        postALU[0] = R[I.rd] //destination
-                        postALU[1] = R[I.rs] + R[I.rt];
-                    }
-                
                 }
+                //need to clear out the instruction executed and move the next down
+                preALU[0] = preALU[1];
             }
-            //need to clear out the instruction executed and move the next down
-            preALU[0] = preALU[1];
         }
 
     }
