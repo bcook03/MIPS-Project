@@ -441,6 +441,13 @@ set cache[4] = {0};
         
     }
     */
+   /*
+   bool WBR(int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU  ){
+        for(int i=0; i < 4; i++){
+            if(MEM[preissue[i]].opp1 == rNUM || MEM[preissue[i]].opp2 == rNum) return true;
+        }
+   }
+   */
 
 };
  struct issue {
@@ -493,6 +500,21 @@ set cache[4] = {0};
     }
 
  */
+/*
+    struct alu{
+        void run(){
+            for(int i = 0; i < 2; i++){
+                //if there is nothing in the preALU, do nothing 
+                // if there is something in the preALU-move it to post, unless post is full
+                if(postALU != 0) break;
+                if(preALU[i] != 0){
+                    postALU = preALU[i];
+                }
+            }
+        }
+
+    }
+*/
  
  fetch FETCH;
  issue ISSUE;
