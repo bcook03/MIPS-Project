@@ -537,30 +537,47 @@ bool RBW_ErrorFound;
         cout << "--------------------\n";
         cout << "Cycle" << value = [cycle];
         <blank_line>
-        Pre-issue buffer:
-        cout << \t << "Entry 0: \t" [instruction]
-        cout << \t << "Entry 1: \t" [instruction]
-        cout << \t << "Entry 2: \t" [instruction]
-        cout << \t << "Entry 3: \t" [instruction]
+        cout << "Pre-issue buffer: ";
+        cout << "\t" << "Entry 0: << "\t" << [instruction];
+        cout << "\t" << "Entry 1: << "\t" << [instruction];
+        cout << "\t" << "Entry 2: << "\t" << [instruction];
+        cout << "\t" << "Entry 3: << "\t" << [instruction];
 
         cout << "Pre_ALU Queue: ";
 
-        cout << \t << "Entry 0: \t" [instruction]
-        cout << \t << "Entry 1: \t" [instruction]
+        cout << "\t" << "Entry 0: << "\t" << [instruction];
+        cout << "\t" << "Entry 1: << "\t" << [instruction];
 
         cout << "Post_ALU Queue: ";
-        cout << \t << "Entry 0: \t" [instruction]
+        cout << "\t" << "Entry 0: << "\t" << [instruction];
+       
         
         cout << "Pre_MEM Queue: ";
-        cout << \t << "Entry 0: \t" [instruction]
-        cout << \t << "Entry 1: \t" [instruction]
+        cout << "\t" << "Entry 0: << "\t" << [instruction];
+        cout << "\t" << "Entry 1: << "\t" << [instruction];
        
         cout << "Post_ALU Queue: ";
-        cout << \t << "Entry 0: \t" [instruction]
+        cout << "\t" << "Entry 0: << "\t" << [instruction];
         < blank_line>
         cout << "Registers\n";
-        cout << "R00:" << \t << int(R0) << \t << int(R1) << ".." << \t << int(R7) << endl;
-        
+        cout << "R00:" << "\t" << int(R0) << "\t" << int(R1) << ".." << "\t" << int(R7) << endl;
+        cout << "R00:" << "\t" << int(R8) << "\t" << int(R9) << ".." << "\t" << int(R15) << endl;
+        cout << "R00:" << "\t" << int(R16) << "\t" << int(R17) << ".." << "\t" << int(R23) << endl;
+        cout << "R00:" << "\t" << int(R24) << "\t" << int(R25) << ".." << "\t" << int(R31) << endl;
+        <blank_line>
+        cout << "Cache" << endl;
+        cout << "Set 0: " << "LRU=<value>";
+        cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
+        cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
+        <blank_line>
+        cout << "Set 3: " << "LRU=<value>";
+        cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
+        cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
+        <blank_line>
+        cout << "first data address" << "\t" << data words as ints w/tabs in between << contuine with the last data word << endl;
+
+
+
 
     }
     
