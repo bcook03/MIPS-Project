@@ -480,7 +480,7 @@ set cache[4] = {0};
                 if (XBW(I.src2, i)) continue;
                 if (XBW(I.dest, i)) continue;
                 // WBR Check
-                if (LW or SW) {
+                if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
                     LW SW checcks
                     issue
