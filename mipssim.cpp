@@ -470,6 +470,9 @@ set cache[4] = {0};
                 if (XBW(I.opp2, i)) continue;
                 if (XBW(I.dest, i)) continue;
                 // WBR Check
+                if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
                 if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
                     //LW SW checcks
