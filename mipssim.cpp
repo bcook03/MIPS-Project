@@ -566,23 +566,23 @@ bool RBW_ErrorFound;
        
         cout << "Post_ALU Queue: ";
         cout << "\t" << "Entry 0: << "\t" << [instruction];
-        < blank_line>
+        cout << endl;
         cout << "Registers\n";
         cout << "R00:" << "\t" << int(R0) << "\t" << int(R1) << ".." << "\t" << int(R7) << endl;
         cout << "R00:" << "\t" << int(R8) << "\t" << int(R9) << ".." << "\t" << int(R15) << endl;
         cout << "R00:" << "\t" << int(R16) << "\t" << int(R17) << ".." << "\t" << int(R23) << endl;
         cout << "R00:" << "\t" << int(R24) << "\t" << int(R25) << ".." << "\t" << int(R31) << endl;
-        <blank_line>
+        cout << endl;
         cout << "Cache" << endl;
         cout << "Set 0: " << "LRU=<value>";
         cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
         cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        <blank_line>
+        cout << endl;
         cout << "Set 3: " << "LRU=<value>";
         cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
         cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
         <blank_line>
-        cout << "first data address" << "\t" << data words as ints w/tabs in between << contuine with the last data word << endl;
+        cout << dataStart << "\t" << word0 = ints << "\t" << word1 = ints << "\t" << contuine with the last data word << endl;
 
     }
     */
