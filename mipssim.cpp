@@ -525,11 +525,10 @@ struct write {
     void run(item MEM[], int R[], int postalu, int postmem, int aluValue, int memValue) {
         if (postmem != 0) {
             R[postmem] = memValue;
-            return;
         }
         else if (postalu != 0) {
             R[postalu] = aluValue;
-            return;
+
         }
         return;
     }
