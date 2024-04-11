@@ -464,16 +464,25 @@ set cache[4] = {0};
                 if (XBW(I.rt, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 if (XBW(I.rd, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 // WBR Check
-                if (LW or SW) {
+                 if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
-                    LW SW checcks
-                    issue
+                    //LW SW checcks
+                    //issue
+                    for(int j = 0; j < 2; j++){
+                        if(premem[j] == 0){
+                            premem[j] = preissue[i];
+                        }
+                    }
                     preissue[i] = 0;
                 }
                 else {
                     //
-                    issue
-                    preissue[i] = 0;
+                    
+                    for(int k = 0; k < 2; k++){
+                        if(preALU[k] == 0){
+                            preALU[k] = preissue[i];
+                        }
+                    }
                 }
             }
             for (int k = 0; k < 4; k++)
