@@ -531,8 +531,8 @@ set cache[4] = {0};
                         }
                         //ADD R[I.rd] = R[I.rs] + R[I.rt];
                         if (I.opcode == 32 && I.funct == 32) {
-                            postALU[0] = I.rd //destination
-                            postALU[1] = R[I.rs] + R[I.rt];
+                            postALU = I.rd //destination
+                            aluValue = R[I.rs] + R[I.rt];
                         }
                     
                     }
@@ -558,7 +558,8 @@ set cache[4] = {0};
                     }
                     //LW
                     if(I.opcode == 35){
-                        R[I.rt] = MEM[I.rs + I.imm].funct;
+                        postmem = I.rt; //destination
+                        memValue = MEM[I.rs + I.imm].funct;
                     }
                 }
             }
