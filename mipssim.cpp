@@ -462,7 +462,7 @@ set cache[4] = {0};
  // Depending on the conditions, it either continues or updates the `preissue` array.
 //- It rearranges elements in the `preissue` array based on certain conditions.
     struct issue{
-        void run(int preissue[], int preALU[], int premem[]){
+        void run(int preissue[], int preALU[], int premem[], item MEM[]){
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
@@ -508,11 +508,11 @@ set cache[4] = {0};
 - It handles moving elements from `preALU` to `postALU` based on certain conditions.
 */
    struct alu{
-        void run(int preALU[], bool didBreak, item MEM[], int PC, int R[]){
+        void run(int preALU[], item MEM[], int PC, int R[], int postalu){
             if(preALU[0] != 0){
                 for(int i = 0; i < 2; i++){
                     if(postALU != 0) break;
-                    item I = MEM[PC];
+                    item I = MEM[preALU[i]];
                     //if there is nothing in the preALU, do nothing
                     // if there is something in the preALU-move it to post, unless post is full
                         //ADDI R[I.rt] = R[I.rs] + I.imm;
@@ -535,11 +535,11 @@ set cache[4] = {0};
     };
 
     struct mem{
-        void run(int preALU[], bool didBreak, item MEM[], int PC, int R[]){
+        void run(int premem[], item MEM[], int PC, int R[], int postmem){
             if(premem[0] != 0){
                 for(int i = 0; i < 2; i++){
                     if(postmem != 0) break;
-                    item I = MEM[PC];
+                    item I = MEM[premem[i]];
                     //if SW
                     if(I.opcode == 43){
                         MEM[I.rs + I.imm].funct = R[I.rt];
@@ -571,14 +571,15 @@ set cache[4] = {0};
  
  fetch FETCH;
  issue ISSUE;
+ alu ALU;
+ mem MEMO;
+ write WB;
 
-bool RBW_ErrorFound;
  while(!didBreak){
-    // WB.run();
-    // MEM.run();
-    // ALU.run();
-    ISSUE.run(preissue, preALU, premem);
-    
+    WB.run(MEM, R, postALU, postmem, aluValue, memValue);
+    MEMO.run(premem, MEM, PC, R, postmem);
+    ALU.run(preALU, MEM, PC, R, postALU);
+    ISSUE.run(preissue, preALU, premem, MEM);
     FETCH.run(preissue, didBreak, MEM, PC,R);
     //print state
     /*
