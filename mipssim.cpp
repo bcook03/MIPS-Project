@@ -482,13 +482,22 @@ set cache[4] = {0};
                 // WBR Check
                 if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
-                    LW SW checcks
-                    issue
+                    //LW SW checcks
+                    //issue
+                    for(int j = 0; j < 2; j++){
+                        if(premem[j] == 0){
+                            premem[j] = I;
+                        }
+                    }
                     preissue[i] = 0;
                 }
                 else {
                     //
-                    issue
+                    for(int k = 0; k < 2; k++){
+                        if(preALU[k] == 0){
+                            preALU[k] = I;
+                        }
+                    }
                     preissue[i] = 0;
                 }
             }
