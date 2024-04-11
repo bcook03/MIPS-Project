@@ -37,7 +37,7 @@ bool XBW( int rNum, int index, int preissue[], int premem[], int prealu[], int p
 	if( postmem !=0 && MEM[postmem].dest == rNum) return true;
 	return false;
 };
-bool WBR(int rNum, int index, item MEM[], int postalu, int postmem ){
+bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue[] ){
         for(int i=0; i < 4; i++){
             if (preissue[i] != 0 && MEM[preissue[i]].rs == rNum) return true;
             if (preissue[i] != 0 && MEM[preissue[i]].rt == rNum) return true;
@@ -471,9 +471,9 @@ int main(int argc, char* argv[] )
                 if (XBW(I.rt, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 if (XBW(I.rd, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 // WBR Check
-                if (WBR(I.rs, i, MEM, postalu, postmem)) continue;
-                if (WBR(I.rt, i, MEM, postalu, postmem)) continue;
-                if (WBR(I.rd, i, MEM, postalu, postmem)) continue;
+                if (WBR(I.rs, i, MEM, postalu, postmem, preissue)) continue;
+                if (WBR(I.rt, i, MEM, postalu, postmem, preissue)) continue;
+                if (WBR(I.rd, i, MEM, postalu, postmem, preissue)) continue;
                  if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
                     //LW SW checcks
