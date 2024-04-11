@@ -12,7 +12,7 @@ struct item{
         string instStr, binstr, binStrSpace;
 
     };
-bool checkRBW(int premem[], int preALU[], int preIssue[], item MEM[]) {
+bool RBW(int premem[], int preALU[], int preIssue[], item MEM[]) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
                     if (preIssue[i] != 0 && MEM[preIssue[i]].rs == MEM[premem[j]].rs) return true;
@@ -460,6 +460,7 @@ set cache[4] = {0};
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
+                if (RBW(premem, preALU, preissue, MEM)) continue;
                 if (XBW(I.rs, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 if (XBW(I.rt, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 if (XBW(I.rd, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
@@ -476,7 +477,6 @@ set cache[4] = {0};
                     preissue[i] = 0;
                 }
                 else {
-                    //
                     
                     for(int k = 0; k < 2; k++){
                         if(preALU[k] == 0){
