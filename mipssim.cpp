@@ -351,7 +351,9 @@ int main(int argc, char* argv[] )
  int premem[2] = {0};
  int preALU[2] = {0};
  int postmem = {0};
- int postALU[2] = {0};
+ int postALU = {0};
+ int aluValue = 0;
+ int memValue = 0;
 
 struct line {
     int validBit, dirtyBit, tag, data;
@@ -522,14 +524,14 @@ set cache[4] = {0};
                     //if there is nothing in the preALU, do nothing 
                     // if there is something in the preALU-move it to post, unless post is full
                     if(preALU[i] != 0){
-                        //ADDI MEM[I.rs + I.imm].funct = R[I.rt]
-                        if(I.opcode == 43){
-                            postALU[0] = R[I.rt]; // destination
-                            postALU[1] = MEM[I.rs + I.imm].funct;
+                        //ADDI R[I.rt] = R[I.rs] + I.imm;
+                        if(I.opcode == 40){
+                            postALU = I.rt; // destination
+                            aluValue = R[I.rs] + I.imm;
                         }
                         //ADD R[I.rd] = R[I.rs] + R[I.rt];
                         if (I.opcode == 32 && I.funct == 32) {
-                            postALU[0] = R[I.rd] //destination
+                            postALU[0] = I.rd //destination
                             postALU[1] = R[I.rs] + R[I.rt];
                         }
                     
@@ -537,6 +539,7 @@ set cache[4] = {0};
                 }
                 //need to clear out the instruction executed and move the next down
                 preALU[0] = preALU[1];
+                preALU[1] = 0;
             }
         }
 
