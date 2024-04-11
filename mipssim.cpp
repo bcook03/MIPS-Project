@@ -475,9 +475,9 @@ set cache[4] = {0};
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                if (XBW( I.src1, i)) continue;
-                if (XBW(I.src2, i)) continue;
-                if (XBW(I.dest, i)) continue;
+                if (XBW( I.rs, i)) continue;
+                if (XBW(I.rt, i)) continue;
+                if (XBW(I.rd, i)) continue;
                 // WBR Check
                 if (LW or SW) {
                     if (premem[1] != 0) continue;
