@@ -39,8 +39,8 @@ bool XBW( int rNum, int index, int preissue[], int premem[], int prealu[], int p
 };
 bool WBR(int rNum, int index, item MEM[], int postalu, int postmem ){
         for(int i=0; i < 4; i++){
-            if(MEM[postalu].rs == rNum || MEM[postalu].rt == rNum || MEM[postalu].rd == rNum) return true;
-            if(MEM[postmem].rs == rNum || MEM[postmem].rt == rNum || MEM[postmem].rd == rNum) return true;
+            if (preissue[i] != 0 && MEM[preissue[i]].rs == rNum) return true;
+            if (preissue[i] != 0 && MEM[preissue[i]].rt == rNum) return true;
 
             return false;
         }
@@ -386,19 +386,21 @@ int main(int argc, char* argv[] )
  int preALU[2] = {0};
  int postmem = {0};
  int postalu = {0};
+ int aluValue = 0;
+ int memValue = 0;
 
-struct line {
-    int validBit, dirtyBit, tag, data;
-};struct entry {
-    line Line[2] = {0};
-};
-struct set {
-    int LRUbit;
-    entry Entry[2] = {0};
+// struct line {
+//     int validBit, dirtyBit, tag, data;
+// };struct entry {
+//     line Line[2] = {0};
+// };
+// struct set {
+//     int LRUbit;
+//     entry Entry[2] = {0};
 
-};
+// };
 
-set cache[4] = {0};
+// set cache[4] = {0};
 
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
