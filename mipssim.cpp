@@ -446,7 +446,7 @@ set cache[4] = {0};
    // write-before-read hazard
    /*
    bool WBR(int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU  ){
-        for(int i=0; i < 4; i++){
+        for(int i=0; i < index; i++){
             if(MEM[preissue[i]].opp1 == rNUM || MEM[preissue[i]].opp2 == rNum) return true;
         }
    }
@@ -540,6 +540,26 @@ set cache[4] = {0};
             }
         }
 
+    }
+*/
+/*
+    struct mem{
+        void run(){
+            if(premem[0] != 0){
+                for(int i = 0; i < 2; i++){
+                    if(postmem[0] != 0) break;
+                    item I = MEM[PC];
+                    //if SW
+                    if(I.opcode == 43){
+                        MEM[I.rs + I.imm].funct = R[I.rt];
+                    }
+                    //LW
+                    if(I.opcode == 35){
+                        R[I.rt] = MEM[I.rs + I.imm].funct;
+                    }
+                }
+            }
+        }
     }
 */
  
