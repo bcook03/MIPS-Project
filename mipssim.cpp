@@ -7,6 +7,22 @@
 #include <fstream>
 using namespace std;
 
+bool checkRBW(int premem[], int preALU[], int preIssue[]) {
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 2; j++) {
+                    int preIssue_rs = (preIssue[i] << 6)>>27;
+                    int preIssue_rt = (preIssue[i] << 11)>>27;
+                    int premem_rs = (premem[j] << 6)>>27;
+                    int premem_rt = (premem[j] << 11)>>27;
+                    int preALU_rs = (preALU[j] << 6)>>27;
+                    int preALU_rt = (preALU[j] << 11)>>27;
+                    if (preIssue_rs == premem_rs || preIssue_rs == preALU_rs) return true;
+                    else if (preIssue_rt == premem_rt || preIssue_rt == preALU_rt) return true;
+                    else return false;
+                }
+            }
+};
+
 int main(int argc, char* argv[] )
 {
     // ./mipssim -i test1.bin -o  x1
@@ -415,18 +431,7 @@ set cache[4] = {0};
         }
     }
  };
-    bool checkRBW(int premem[], int preALU[], int preIssue[]) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 2; j++) {
-                    if (preIssue[i] == premem[j] || preIssue[i] == preALU[j]){
-                        return true;
-                    }
-                    else {
-                    return false;
-                }
-            }
-        }
-    }
+    
     // write-after-read hazards
     /*bool XBW( int rNum, int index ){
 	for( int i = 0; i < index; i++ ) {
