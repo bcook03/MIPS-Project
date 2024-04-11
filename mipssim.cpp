@@ -38,6 +38,16 @@ bool XBW( int rNum, int index ){
         return false;
 }
 
+bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue[] ){
+        for(int i=0; i < 4; i++){
+            if (preissue[i] != 0 && MEM[preissue[i]].rs == rNum) return true;
+            if (preissue[i] != 0 && MEM[preissue[i]].rt == rNum) return true;
+
+            return false;
+        }
+        return false;
+}
+
 int main(int argc, char* argv[] )
 {
     // ./mipssim -i test1.bin -o  x1
@@ -447,64 +457,7 @@ set cache[4] = {0};
         }
     }
  };
- /*
-    bool checkRBW(int premem[], int preALU[], int preIssue[]) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 2; j++) {
-                    if (preIssue[i] == premem[j] || preIssue[i] == preALU[j]){
-                        return true;
-                    }
-                    else {
-                    return false;
-                }
-            }
-        }
-    }
-    */
-    // write-after-read hazards
-    /*bool XBW( int rNum, int index ){
-	for( int i = 0; i < index; i++ ) {
-		if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
-	}	
-	for( int i = 0; i < 2; i++ ) {
-		if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
-	}	
-	for( int i = 0; i < 2; i++ ) {
-		if( prealu[i] != 0 && MEM[prealu[i]].dest == rNum) return true;
-	}	
-	if( postalu != 0 && MEM[postalu].dest == rNum) return true;
-	if( postmem !=0 && MEM[postmem].dest == rNum) return true;
-	return false;
-}
-    */
-   // write-before-read hazard
-   /*
-   bool WBR(int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU  ){
-        for(int i=0; i < 4; i++){
-            if(MEM[preissue[i]].opp1 == rNUM || MEM[preissue[i]].opp2 == rNum) return true;
-        }
-   }
-   */
 
-/*
- struct issue {
-    void run(int preissue[], int preALU[], int premem[]) {
-        for(int i = 0; i < 4; i++) {
-            int preissue_opcode = preissue[i] >> 26;
-            if (preALU[1] != 0 && premem[1] != 0) break;
-            for (int j = 0; j < 2; j++) {
-                if ((preissue_opcode == 35 || preissue_opcode == 43) && premem[j] == 0) {
-                    premem[j] == preissue[i];
-                }
-                else if (preALU[j] == 0) {
-                    preALU[j] == preissue[i];
-                }
-            }
-        }
-    };
-    
- };
- */
  
  // Depending on the conditions, it either continues or updates the `preissue` array.
 //- It rearranges elements in the `preissue` array based on certain conditions.
