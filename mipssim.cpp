@@ -6,19 +6,20 @@
 #include <iomanip>
 #include <fstream>
 using namespace std;
+struct item{
+        int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa, opp1, opp2, dest;
+        unsigned int asUint;
+        string instStr, binstr, binStrSpace;
 
-bool checkRBW(int premem[], int preALU[], int preIssue[]) {
+    };
+bool checkRBW(int premem[], int preALU[], int preIssue[], item MEM[]) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
-                    int preIssue_rs = (preIssue[i] << 6)>>27;
-                    int preIssue_rt = (preIssue[i] << 11)>>27;
-                    int premem_rs = (premem[j] << 6)>>27;
-                    int premem_rt = (premem[j] << 11)>>27;
-                    int preALU_rs = (preALU[j] << 6)>>27;
-                    int preALU_rt = (preALU[j] << 11)>>27;
-                    if (preIssue_rs == premem_rs || preIssue_rs == preALU_rs) return true;
-                    else if (preIssue_rt == premem_rt || preIssue_rt == preALU_rt) return true;
-                    else return false;
+                    if (preIssue[i] != 0 && MEM[preIssue[i]].rs == MEM[premem[j]].rs) return true;
+                    if (preIssue[i] != 0 && MEM[preIssue[i]].rt == MEM[premem[j]].rt) return true;
+                    if (preIssue[i] != 0 && MEM[preIssue[i]].rs == MEM[preALU[j]].rs) return true;
+                    if (preIssue[i] != 0 && MEM[preIssue[i]].rt == MEM[preALU[j]].rt) return true;
+                    return false;
                 }
             }
 };
@@ -37,12 +38,7 @@ int main(int argc, char* argv[] )
     ofstream disout(string (argv[4]) + "_dis.txt");
     ofstream simout(string (argv[4]) + "_pipeline.txt");
 
-    struct item{
-        int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa, opp1, opp2, dest;
-        unsigned int asUint;
-        string instStr, binstr, binStrSpace;
-
-    };
+    
     bool didBreak = false;
     int addr = 96;
     int amt = 4;
@@ -384,7 +380,7 @@ set cache[4] = {0};
 
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
-        while(!didBreak)
+        while(!didBreak) {
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
             if (preissue[3] != 0) break;
@@ -421,13 +417,15 @@ set cache[4] = {0};
             else {
                 for (int j = 0; j < 4; j++) {
                     if (preissue[j] == 0)
-                        preissue[j] = I.asUint;
+                        preissue[j] = PC;
+                        PC += 4;
                         break;
 
                 }
             }
         
 
+        }
         }
     }
  };
