@@ -23,6 +23,20 @@ bool checkRBW(int premem[], int preALU[], int preIssue[], item MEM[]) {
                 }
             }
 };
+bool XBW( int rNum, int index, int preissue[], int premem[], int prealu[], int postalu, int postmem, item MEM[] ){
+	for( int i = 0; i < index; i++ ) {
+		if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
+	}	
+	for( int i = 0; i < 2; i++ ) {
+		if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
+	}	
+	for( int i = 0; i < 2; i++ ) {
+		if( prealu[i] != 0 && MEM[prealu[i]].dest == rNum) return true;
+	}	
+	if( postalu != 0 && MEM[postalu].dest == rNum) return true;
+	if( postmem !=0 && MEM[postmem].dest == rNum) return true;
+	return false;
+};
 
 int main(int argc, char* argv[] )
 {
@@ -431,20 +445,7 @@ set cache[4] = {0};
  };
     
     // write-after-read hazards
-    /*bool XBW( int rNum, int index ){
-	for( int i = 0; i < index; i++ ) {
-		if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
-	}	
-	for( int i = 0; i < 2; i++ ) {
-		if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
-	}	
-	for( int i = 0; i < 2; i++ ) {
-		if( prealu[i] != 0 && MEM[prealu[i]].dest == rNum) return true;
-	}	
-	if( postalu != 0 && MEM[postalu].dest == rNum) return true;
-	if( postmem !=0 && MEM[postmem].dest == rNum) return true;
-	return false;
-}
+    /*
     */
    /*
    bool WBR(int rNum, int index, item MEM[], int preissue[], int preALU[], int premem[], int postALU  ){
@@ -454,33 +455,14 @@ set cache[4] = {0};
    }
    */
 
-
- struct issue {
-    void run(int preissue[], int preALU[], int premem[]) {
-        for(int i = 0; i < 4; i++) {
-            int preissue_opcode = preissue[i] >> 26;
-            if (preALU[1] != 0 && premem[1] != 0) break;
-            for (int j = 0; j < 2; j++) {
-                if ((preissue_opcode == 35 || preissue_opcode == 43) && premem[j] == 0) {
-                    premem[j] == preissue[i];
-                }
-                else if (preALU[j] == 0) {
-                    preALU[j] == preissue[i];
-                }
-            }
-        }
-    };
-    
- };
- /*
     struct issue{
-        void run(){
+        void run(int preissue[], item MEM[], int premem[], int preALU[], int postmem, int postalu) {
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                if (XBW( I.rs, i)) continue;
-                if (XBW(I.rt, i)) continue;
-                if (XBW(I.rd, i)) continue;
+                if (XBW(I.rs, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
+                if (XBW(I.rt, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
+                if (XBW(I.rd, i, preissue, premem, preALU, postalu, postmem, MEM)) continue;
                 // WBR Check
                 if (LW or SW) {
                     if (premem[1] != 0) continue;
