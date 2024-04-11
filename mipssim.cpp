@@ -7,6 +7,37 @@
 #include <fstream>
 using namespace std;
 
+struct item{
+        int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa, opp1, opp2, dest;
+        unsigned int asUint;
+        string instStr, binstr, binStrSpace;
+
+    };
+ bool didBreak = false;
+ int preissue[4] = {0};
+ int premem[2] = {0};
+ int preALU[2] = {0};
+ int postmem = {0};
+ int postALU = {0};
+ int aluValue = 0;
+ int memValue = 0;
+item MEM[500];
+//map<int, item>MEM;
+bool XBW( int rNum, int index ){
+        for( int i = 0; i < index; i++ ) {
+                if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
+        }
+        for( int i = 0; i < 2; i++ ) {
+                if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
+        }
+        for( int i = 0; i < 2; i++ ) {
+                if( preALU[i] != 0 && MEM[preALU[i]].dest == rNum) return true;
+        }
+        if( postALU != 0 && MEM[postALU].dest == rNum) return true;
+        if( postmem !=0 && MEM[postmem].dest == rNum) return true;
+        return false;
+}
+
 int main(int argc, char* argv[] )
 {
     // ./mipssim -i test1.bin -o  x1
@@ -20,7 +51,7 @@ int main(int argc, char* argv[] )
     int FD = open(argv[2], O_RDONLY);
     ofstream disout(string (argv[4]) + "_dis.txt");
     ofstream simout(string (argv[4]) + "_pipeline.txt");
-
+    /*
     struct item{
         int i, rs, rt, rd, imm, opcode, valid,  instr_index, funct, hint, offset, sa, opp1, opp2, dest;
         unsigned int asUint;
@@ -28,6 +59,7 @@ int main(int argc, char* argv[] )
 
     };
     bool didBreak = false;
+    */
     int addr = 96;
     int amt = 4;
     int dataStart, dataEnd;
@@ -347,11 +379,11 @@ int main(int argc, char* argv[] )
 
 
  didBreak = false;
- int preissue[4] = {0};
- int premem[2] = {0};
- int preALU[2] = {0};
- int postmem = {0};
- int postalu = {0};
+ //int preissue[4] = {0};
+ //int premem[2] = {0};
+ //int preALU[2] = {0};
+ //int postmem = {0};
+ //int postalu = {0};
 
 struct line {
     int validBit, dirtyBit, tag, data;
@@ -415,6 +447,7 @@ set cache[4] = {0};
         }
     }
  };
+ /*
     bool checkRBW(int premem[], int preALU[], int preIssue[]) {
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 2; j++) {
@@ -427,6 +460,7 @@ set cache[4] = {0};
             }
         }
     }
+    */
     // write-after-read hazards
     /*bool XBW( int rNum, int index ){
 	for( int i = 0; i < index; i++ ) {
@@ -452,7 +486,7 @@ set cache[4] = {0};
    }
    */
 
-
+/*
  struct issue {
     void run(int preissue[], int preALU[], int premem[]) {
         for(int i = 0; i < 4; i++) {
@@ -470,60 +504,104 @@ set cache[4] = {0};
     };
     
  };
- /*
-  Depending on the conditions, it either continues or updates the `preissue` array.
-- It rearranges elements in the `preissue` array based on certain conditions.
+ */
+ 
+ // Depending on the conditions, it either continues or updates the `preissue` array.
+//- It rearranges elements in the `preissue` array based on certain conditions.
     struct issue{
-        void run(){
+        void run(int preissue[], int preALU[], int premem[]){
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                if (XBW( I.src1, i)) continue;
-                if (XBW(I.src2, i)) continue;
+                if (XBW( I.opp1, i)) continue;
+                if (XBW(I.opp2, i)) continue;
                 if (XBW(I.dest, i)) continue;
                 // WBR Check
-                if (LW or SW) {
+                if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
-                    LW SW checcks
-                    issue
+                    //LW SW checcks
+                    //issue
+                    for(int j = 0; j < 2; j++){
+                        if(premem[j] == 0){
+                            premem[j] = I.asUint;
+                        }
+                    }
                     preissue[i] = 0;
                 }
                 else {
                     //
-                    issue
+                    for(int k = 0; k < 2; k++){
+                        if(preALU[k] == 0){
+                            preALU[k] = I.asUint;
+                        }
+                    }
                     preissue[i] = 0;
                 }
             }
             for (int k = 0; k < 4; k++)
-            for (int i = 3; i > 0; i--){
-                if(preissue[i-1] == 0){
-                    preissue[i-1] = preissue[i];
-                    preissue[i] = 0;
+                for (int i = 3; i > 0; i--){
+                    if(preissue[i-1] == 0){
+                        preissue[i-1] = preissue[i];
+                        preissue[i] = 0;
+                    }
                 }
-            }
         }
-    }
+    };
 
- */
+ 
 /*
  Defines a struct `alu` with a method `run()`.
 - The `run()` method iterates through a loop of 2 elements.
 - It handles moving elements from `preALU` to `postALU` based on certain conditions.
-
-    struct alu{
-        void run(){
-            for(int i = 0; i < 2; i++){
-                //if there is nothing in the preALU, do nothing 
-                // if there is something in the preALU-move it to post, unless post is full
-                if(postALU != 0) break;
-                if(preALU[i] != 0){
-                    postALU = preALU[i];
+*/
+   struct alu{
+        void run(int preALU[], bool didBreak, item MEM[], int PC, int R[]){
+            if(preALU[0] != 0){
+                for(int i = 0; i < 2; i++){
+                    if(postALU != 0) break;
+                    item I = MEM[PC];
+                    //if there is nothing in the preALU, do nothing
+                    // if there is something in the preALU-move it to post, unless post is full
+                        //ADDI R[I.rt] = R[I.rs] + I.imm;
+                        if(I.opcode == 40){
+                            postALU = I.rt; // destination
+                            aluValue = R[I.rs] + I.imm;
+                        }
+                        //ADD R[I.rd] = R[I.rs] + R[I.rt];
+                        if (I.opcode == 32 && I.funct == 32) {
+                            postALU = I.rd; //destination
+                            aluValue = R[I.rs] + R[I.rt];
+                        }
                 }
+                //need to clear out the instruction executed and move the next down
+                preALU[0] = preALU[1];
+                preALU[1] = 0;
             }
         }
 
-    }
-*/
+    };
+
+    struct mem{
+        void run(int preALU[], bool didBreak, item MEM[], int PC, int R[]){
+            if(premem[0] != 0){
+                for(int i = 0; i < 2; i++){
+                    if(postmem != 0) break;
+                    item I = MEM[PC];
+                    //if SW
+                    if(I.opcode == 43){
+                        MEM[I.rs + I.imm].funct = R[I.rt];
+                    }
+                    //LW
+                    if(I.opcode == 35){
+                        postmem = I.rt; //destination
+                        memValue = MEM[I.rs + I.imm].funct;
+                    }
+                }
+            }
+        }
+    };
+
+
  
  fetch FETCH;
  issue ISSUE;
