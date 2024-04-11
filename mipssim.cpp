@@ -573,17 +573,7 @@ bool RBW_ErrorFound;
         cout << "R00:" << "\t" << int(R16) << "\t" << int(R17) << ".." << "\t" << int(R23) << endl;
         cout << "R00:" << "\t" << int(R24) << "\t" << int(R25) << ".." << "\t" << int(R31) << endl;
         cout << endl;
-        cout << "Cache" << endl;
-        cout << "Set 0: " << "LRU=<value>";
-        cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        cout << endl;
-        cout << "Set 3: " << "LRU=<value>";
-        cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        <blank_line>
         cout << dataStart << "\t" << word0 = ints << "\t" << word1 = ints << "\t" << contuine with the last data word << endl;
-
     }
     */
     
