@@ -520,13 +520,28 @@ int main(int argc, char* argv[] )
 
     }
 */
+
+struct write {
+    void run(item MEM[], int R[], int postalu, int postmem, int aluValue, int memValue) {
+        if (postmem != 0) {
+            R[postmem] = memValue;
+            return;
+        }
+        else if (postalu != 0) {
+            R[postalu] = aluValue;
+            return;
+        }
+        return;
+    }
+};
  
  fetch FETCH;
  issue ISSUE;
+ write WB;
 
 bool RBW_ErrorFound;
  while(!didBreak){
-    // WB.run();
+    WB.run(MEM, R, postalu, postmem, aluValue, memValue);
     // MEM.run();
     // ALU.run();
     ISSUE.run(preissue, MEM, premem, preALU, postmem, postalu);
