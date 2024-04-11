@@ -504,26 +504,24 @@ set cache[4] = {0};
                 }
             }
             for (int k = 0; k < 4; k++)
-            for (int i = 3; i > 0; i--){
-                if(preissue[i-1] == 0){
-                    preissue[i-1] = preissue[i];
-                    preissue[i] = 0;
+                for (int i = 3; i > 0; i--){
+                    if(preissue[i-1] == 0){
+                        preissue[i-1] = preissue[i];
+                        preissue[i] = 0;
+                    }
                 }
-            }
         }
     }
-
  */
 /*
     struct alu{
         void run(int preALU[], bool didBreak, item MEM[], int PC, int R[]){
             if(preALU[0] != 0){
                 for(int i = 0; i < 2; i++){
-                    if(postALU[0] != 0) break;
+                    if(postALU[i] != 0) break;
                     item I = MEM[PC];
                     //if there is nothing in the preALU, do nothing 
                     // if there is something in the preALU-move it to post, unless post is full
-                    if(preALU[i] != 0){
                         //ADDI R[I.rt] = R[I.rs] + I.imm;
                         if(I.opcode == 40){
                             postALU = I.rt; // destination
@@ -534,8 +532,6 @@ set cache[4] = {0};
                             postALU = I.rd //destination
                             aluValue = R[I.rs] + R[I.rt];
                         }
-                    
-                    }
                 }
                 //need to clear out the instruction executed and move the next down
                 preALU[0] = preALU[1];
