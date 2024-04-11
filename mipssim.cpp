@@ -586,53 +586,47 @@ set cache[4] = {0};
     FETCH.run(preissue, didBreak, MEM, PC,R);
     //print state
     /*
-    if(entry.is_empty){
-        cout << "print as it was for project 1" << endl;
-    }
-    else {
+    //print state
+  /*
         cout << "--------------------\n";
-        cout << "Cycle" << value = [cycle];
-        <blank_line>
-        cout << "Pre-issue buffer: ";
-        cout << "\t" << "Entry 0: << "\t" << [instruction];
-        cout << "\t" << "Entry 1: << "\t" << [instruction];
-        cout << "\t" << "Entry 2: << "\t" << [instruction];
-        cout << "\t" << "Entry 3: << "\t" << [instruction];
+        cout << "Cycle" << value = [cycle] << endl;
 
-        cout << "Pre_ALU Queue: ";
+        cout << "Pre-issue buffer: " << endl;
+                for(int i = 0; i < 4; i++){
+                        cout << "\t" << "Entry" << i << ":"<< "\t" << preissue[i] << endl;
+                }
+        cout << "Pre_ALU Queue: " << endl;
+                for(int i = 0; i < 2; i++){
+                        cout << "\t" << "Entry" << i << ":" << "\t" << preALU[i] << endl;
+                }
 
-        cout << "\t" << "Entry 0: << "\t" << [instruction];
-        cout << "\t" << "Entry 1: << "\t" << [instruction];
+        cout << "Post_ALU Queue: " << endl;
+        cout << "\t" << "Entry 0: " << "\t" << postALU << endl;
 
-        cout << "Post_ALU Queue: ";
-        cout << "\t" << "Entry 0: << "\t" << [instruction];
-       
-        
-        cout << "Pre_MEM Queue: ";
-        cout << "\t" << "Entry 0: << "\t" << [instruction];
-        cout << "\t" << "Entry 1: << "\t" << [instruction];
-       
-        cout << "Post_ALU Queue: ";
-        cout << "\t" << "Entry 0: << "\t" << [instruction];
-        < blank_line>
-        cout << "Registers\n";
-        cout << "R00:" << "\t" << int(R0) << "\t" << int(R1) << ".." << "\t" << int(R7) << endl;
-        cout << "R00:" << "\t" << int(R8) << "\t" << int(R9) << ".." << "\t" << int(R15) << endl;
-        cout << "R00:" << "\t" << int(R16) << "\t" << int(R17) << ".." << "\t" << int(R23) << endl;
-        cout << "R00:" << "\t" << int(R24) << "\t" << int(R25) << ".." << "\t" << int(R31) << endl;
-        <blank_line>
-        cout << "Cache" << endl;
-        cout << "Set 0: " << "LRU=<value>";
-        cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        <blank_line>
-        cout << "Set 3: " << "LRU=<value>";
-        cout << "\t" << "Entry 0: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        cout << "\t" << "Entry 1: [(valid bit, dirty bit, int(tag)) << "<word0,word1>"]";
-        <blank_line>
-        cout << "first data address" << "\t" << data words as ints w/tabs in between << contuine with the last data word << endl;
+
+        cout << "Pre_MEM Queue: " << endl;
+                for(int i = 0; i < 2; i++{
+                        cout << "\t" << "Entry" i << ": " << "\t" << premem[i] << endl;
+                }
+
+        cout << "Post_MEM Queue: ";
+        cout << "\t" << "Entry 0: " << "\t" << postmem << endl << endl;
+
+        cout << "Registers";
+        for(int i = 0; i < 32; i++) {
+                if( (i + 1) % 8 == 0){
+                        cout << endl;
+                        std::string numstr = to_string(i);
+                        if (numstr.size() == 1) numstr = '0' + numstr;
+                        cout << "R" << numstr << ":";
+                }
+                cout << "\t" << R[i];
+        }
+
+        cout << "Data" << endl;
 
     }
+
     */
     
  }
