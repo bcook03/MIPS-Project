@@ -245,7 +245,7 @@ int main(int argc, char* argv[] )
         while(didBreak == false) {
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
-            if (preissue[3] != 0) return;
+            if (preissue[3] != 0) break;
             //checks if a break instruction was fetched which stalls fetch by breaking
             if (didBreak) break;
             item I = MEM[PC];
@@ -278,9 +278,10 @@ int main(int argc, char* argv[] )
             // else move I to next open spot in preissue
             else {
                 for (int j = 0; j < 4; j++) {
-                    if (preissue[j] == 0)
+                    if (preissue[j] == 0) {
                         preissue[j] = I.asUint;
                         break;
+                    }
 
                 }
             }
@@ -403,7 +404,6 @@ int main(int argc, char* argv[] )
                 R[postalu] = aluValue;
 
             }
-            return;
         }
     };
     
