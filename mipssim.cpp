@@ -327,13 +327,14 @@ int main(int argc, char* argv[] )
                     preissue[i] = 0;
                 }
             }
-            for (int k = 0; k < 4; k++)
+            for (int k = 0; k < 4; k++) {
                 for (int i = 3; i > 0; i--){
                     if(preissue[i-1] == 0){
                         preissue[i-1] = preissue[i];
                         preissue[i] = 0;
                     }
                 }
+            }
         }
     };
 
