@@ -227,7 +227,7 @@ int main(int argc, char* argv[] )
             MEM[addr] = I;
             addr+=4;
         }
-        
+        break;
     } 
     dataEnd = addr;
     
