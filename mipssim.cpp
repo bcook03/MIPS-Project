@@ -437,50 +437,69 @@ int main(int argc, char* argv[] )
 
         simout << "--------------------\n";
         simout << "Cycle" << cycle << ": " << endl;
+        cout << "--------------------\n";
+        cout << "Cycle" << cycle << ": " << endl;
 
         simout << "Pre-issue buffer: " << endl;
+        cout << "Pre-issue buffer: " << endl;
                 for(int i = 0; i < 4; i++){
                         simout << "\t" << "Entry " << i << ":"<< "\t" << MEM[preissue[i]].instStr << endl;
+                        cout << "\t" << "Entry " << i << ":"<< "\t" << MEM[preissue[i]].instStr << endl;
                 }
         simout << "Pre_ALU Queue: " << endl;
+        cout << "Pre_ALU Queue: " << endl;
                 for(int i = 0; i < 2; i++){
                         simout << "\t" << "Entry " << i << ":" << "\t" << MEM[preALU[i]].instStr << endl;
+                        cout << "\t" << "Entry " << i << ":" << "\t" << MEM[preALU[i]].instStr << endl;
                 }
 
         simout << "Post_ALU Queue: " << endl;
         simout << "\t" << "Entry 0: " << "\t" << MEM[postALU].instStr << endl;
-
+        cout << "Post_ALU Queue: " << endl;
+        cout << "\t" << "Entry 0: " << "\t" << MEM[postALU].instStr << endl;
 
         simout << "Pre_MEM Queue: " << endl;
+        cout << "Pre_MEM Queue: " << endl;
                 for(int i = 0; i < 2; i++){
                         simout << "\t" << "Entry " << i << ": " << "\t" << MEM[premem[i]].instStr << endl;
+                        cout << "\t" << "Entry " << i << ": " << "\t" << MEM[premem[i]].instStr << endl;
                 }
 
         simout << "Post_MEM Queue: ";
         simout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
+        cout << "Post_MEM Queue: ";
+        cout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
 
         simout << "Registers";
+        cout << "Registers";
         for(int i = 0; i < 32; i++) {
                 if( (i + 1) % 8 == 0){
                         simout << endl;
+                        cout << endl;
                         std::string numstr = to_string(i);
                         if (numstr.size() == 1) numstr = '0' + numstr;
                         simout << "R" << numstr << ":";
+                        cout << "R" << numstr << ":";
                 }
                 simout << "\t" << R[i];
+                cout << "\t" << R[i];
         }
 
         simout << "Data" << endl;
+        cout << "Data" << endl;
 
         int count = 1;
 
         for (int i = dataStart; i <= dataEnd; i+=4) {
             if (i == dataStart)
                 simout << i << ":";
+                cout << i << ":";
             if (count % 8 == 0){
                 simout << endl << i << ":";
+                cout << endl << i << ":";
             }
             simout << "\t" << MEM[i].asUint;
+            cout << "\t" << MEM[i].asUint;
         }
         cycle += 1;
     }
