@@ -200,7 +200,7 @@ bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue
 
     
 
-    struct write {
+    struct writeback {
         void run(item MEM[], int R[], int postalu, int postmem, int aluValue, int memValue) {
             if (postmem != 0) {
                 R[postmem] = memValue;
@@ -409,7 +409,7 @@ int main(int argc, char* argv[] )
  issue ISSUE;
  alu ALU;
  mem MEMO;
- write WB;
+ writeback WB;
 
  while(!didBreak){
     WB.run(MEM, R, postALU, postmem, aluValue, memValue);
