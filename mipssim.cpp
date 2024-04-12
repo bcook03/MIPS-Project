@@ -21,9 +21,8 @@ struct item{
  int postALU = {0};
  int aluValue = 0;
  int memValue = 0;
-item MEM[500];
 //map<int, item>MEM;
-bool XBW( int rNum, int index ){
+bool XBW( int rNum, int index, item MEM[] ){
         for( int i = 0; i < index; i++ ) {
                 if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
         }
@@ -225,10 +224,11 @@ int main(int argc, char* argv[] )
             
 
             MEM[addr] = I;
+            dataEnd = addr;
             addr+=4;
         }
     } 
-    dataEnd = addr;
+    
     
     
     // end of decode
@@ -314,9 +314,9 @@ int main(int argc, char* argv[] )
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                if (XBW( I.opp1, i)) continue;
-                if (XBW(I.opp2, i)) continue;
-                if (XBW(I.dest, i)) continue;
+                if (XBW( I.opp1, i, MEM)) continue;
+                if (XBW(I.opp2, i, MEM)) continue;
+                if (XBW(I.dest, i, MEM)) continue;
                 // WBR Check
                 if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
                 if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
@@ -422,6 +422,7 @@ int main(int argc, char* argv[] )
             return;
         }
     };
+
  
  write WB;
 
