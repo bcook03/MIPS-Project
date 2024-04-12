@@ -235,156 +235,156 @@ int main(int argc, char* argv[] )
     int R[32] = {0};
     int cycle = 1;
     breakVal = true;
-    while( breakVal && cycle <= 144 ){
+    // while( breakVal && cycle <= 144 ){
 
-        item I = MEM[PC];
-        if (I.valid == 0 && cycle <= 144 ){
-            PC += 4;
-            I = MEM[PC];
-        }
-        else {
-            if(I.opcode == 34) {
-                PC = I.instr_index;
-            }
-            else if (I.opcode == 36){
-                PC += I.offset;
-            }
-            else if (I.opcode == 32 && I.funct == 8) {
-                PC = R[I.rs];
-            }
-            else if ( I.opcode == 33 && R[I.rt] == 0) {
-                if (R[I.rs] < 0) {
-                    PC = I.offset;
-                }
-            }
-            else if (I.opcode == 32 && I.funct == 32) {
-                R[I.rd] = R[I.rs] + R[I.rt];
-            }
-            else if(I.opcode == 40){
-                R[I.rt] = R[I.rs] + I.imm;
-            }
-            else if(I.opcode == 60 && I.funct == 2){
-	        R[I.rd] = R[I.rs] * R[I.rt];
-            }
-            else if(I.opcode == 32 && I.funct == 36) {
-                if(R[I.rs] == 1 && R[I.rt] == 1){
-                    R[I.rd] = 1;
-                }
-                else {
-                    R[I.rd] = 0;
-                }
-            }
-            else if(I.opcode == 32 && I.funct ==37) {
-                if(R[I.rs] == 1 || R[I.rt] == 1){
-                    R[I.rd] = 1;
-                }
-                else {
-                    R[I.rd] = 0;
-                }
-            }
-            else if(I.opcode == 32 && I.funct == 5) {
-                if(R[I.rt] == 0) {
-                    R[I.rd] = R[I.rs];
-                }
-            }
-            else if(I.opcode == 32 && I.funct == 34) {
-            R[I.rd] = R[I.rs] - R[I.rt];
-            }
-            else if(I.opcode == 43){
-                MEM[I.rs + I.imm].funct = R[I.rt];
-            }
+    //     item I = MEM[PC];
+    //     if (I.valid == 0 && cycle <= 144 ){
+    //         PC += 4;
+    //         I = MEM[PC];
+    //     }
+    //     else {
+    //         if(I.opcode == 34) {
+    //             PC = I.instr_index;
+    //         }
+    //         else if (I.opcode == 36){
+    //             PC += I.offset;
+    //         }
+    //         else if (I.opcode == 32 && I.funct == 8) {
+    //             PC = R[I.rs];
+    //         }
+    //         else if ( I.opcode == 33 && R[I.rt] == 0) {
+    //             if (R[I.rs] < 0) {
+    //                 PC = I.offset;
+    //             }
+    //         }
+    //         else if (I.opcode == 32 && I.funct == 32) {
+    //             R[I.rd] = R[I.rs] + R[I.rt];
+    //         }
+    //         else if(I.opcode == 40){
+    //             R[I.rt] = R[I.rs] + I.imm;
+    //         }
+    //         else if(I.opcode == 60 && I.funct == 2){
+	//         R[I.rd] = R[I.rs] * R[I.rt];
+    //         }
+    //         else if(I.opcode == 32 && I.funct == 36) {
+    //             if(R[I.rs] == 1 && R[I.rt] == 1){
+    //                 R[I.rd] = 1;
+    //             }
+    //             else {
+    //                 R[I.rd] = 0;
+    //             }
+    //         }
+    //         else if(I.opcode == 32 && I.funct ==37) {
+    //             if(R[I.rs] == 1 || R[I.rt] == 1){
+    //                 R[I.rd] = 1;
+    //             }
+    //             else {
+    //                 R[I.rd] = 0;
+    //             }
+    //         }
+    //         else if(I.opcode == 32 && I.funct == 5) {
+    //             if(R[I.rt] == 0) {
+    //                 R[I.rd] = R[I.rs];
+    //             }
+    //         }
+    //         else if(I.opcode == 32 && I.funct == 34) {
+    //         R[I.rd] = R[I.rs] - R[I.rt];
+    //         }
+    //         else if(I.opcode == 43){
+    //             MEM[I.rs + I.imm].funct = R[I.rt];
+    //         }
 
-            else if(I.opcode == 35){
-                R[I.rt] = MEM[I.rs + I.imm].funct;
-            }
+    //         else if(I.opcode == 35){
+    //             R[I.rt] = MEM[I.rs + I.imm].funct;
+    //         }
 
-            else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
-                R[I.rd] = R[I.rt] << I.sa;
-            }
+    //         else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
+    //             R[I.rd] = R[I.rt] << I.sa;
+    //         }
             
-            else if(I.opcode == 32 && I.funct == 2){
-                R[I.rd] = R[I.rt] >> I.sa;
-            }
-            else if (I.opcode == 32 && I.funct == 13){
-                breakVal = false;
-            }
+    //         else if(I.opcode == 32 && I.funct == 2){
+    //             R[I.rd] = R[I.rt] >> I.sa;
+    //         }
+    //         else if (I.opcode == 32 && I.funct == 13){
+    //             breakVal = false;
+    //         }
 
-        cout << "==================\ncycle: " + to_string(cycle)
-                + " \t" + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\nr00:\t";
-                for (int i = 1; i <= 32; i++) {
-                    cout << to_string(R[i-1]) << "\t";
-                        if (i % 8 == 0 && i!= 32 ) {
-                            cout << endl;
-                            if (i < 10) {
-                                cout << "r0" << to_string(i) << ":\t";
-                            }
-                            else {
-                                cout << "r" << to_string(i) << ":\t";
-                            }
-                        }
-                }
-        cout << "\n\ndata:" << endl;
-            for (int i = 172; i <= 264; i+=4 ){
-                if (i == 172) {
-                    cout << "172:\t";
-                }
-                else if (i == 204) {
-                    cout << endl << "204:\t";
-                }
-                else if (i == 236) {
-                    cout << endl << "236:\t";
-                }
-                if (MEM[i].valid == 1)
-                cout << to_string(MEM[i].funct - 64) << "\t";
-                else 
-                cout << to_string(MEM[i].funct) << "\t";
+    //     cout << "==================\ncycle: " + to_string(cycle)
+    //             + " \t" + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\nr00:\t";
+    //             for (int i = 1; i <= 32; i++) {
+    //                 cout << to_string(R[i-1]) << "\t";
+    //                     if (i % 8 == 0 && i!= 32 ) {
+    //                         cout << endl;
+    //                         if (i < 10) {
+    //                             cout << "r0" << to_string(i) << ":\t";
+    //                         }
+    //                         else {
+    //                             cout << "r" << to_string(i) << ":\t";
+    //                         }
+    //                     }
+    //             }
+    //     cout << "\n\ndata:" << endl;
+    //         for (int i = 172; i <= 264; i+=4 ){
+    //             if (i == 172) {
+    //                 cout << "172:\t";
+    //             }
+    //             else if (i == 204) {
+    //                 cout << endl << "204:\t";
+    //             }
+    //             else if (i == 236) {
+    //                 cout << endl << "236:\t";
+    //             }
+    //             if (MEM[i].valid == 1)
+    //             cout << to_string(MEM[i].funct - 64) << "\t";
+    //             else 
+    //             cout << to_string(MEM[i].funct) << "\t";
 
             
-        }
-        cout << endl << endl;
+    //     }
+    //     simout << endl << endl;
 
                 
-        simout << "==================\ncycle: " + to_string(cycle)
-                + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
-                for (int i = 1; i <= 32; i++) {
-                    simout << to_string(R[i-1]) << "\t";
-                    if (i % 8 == 0){
-                        simout << endl;
-                        if (i < 10) {
-                            simout << "r0" << to_string(i) << ":\t";
-                        }
-                        else {
-                            simout << "r" << to_string(i) << ":\t";
-                        }
-                    }
+    //     simout << "==================\ncycle: " + to_string(cycle)
+    //             + " " + to_string(PC) + "\t" + I.instStr + " " + " " + "\n\nregisters:\n";
+    //             for (int i = 1; i <= 32; i++) {
+    //                 simout << to_string(R[i-1]) << "\t";
+    //                 if (i % 8 == 0){
+    //                     simout << endl;
+    //                     if (i < 10) {
+    //                         simout << "r0" << to_string(i) << ":\t";
+    //                     }
+    //                     else {
+    //                         simout << "r" << to_string(i) << ":\t";
+    //                     }
+    //                 }
        
-                }
-        simout << "\n\ndata:" << endl;
-            for (int i = dataStart; i <= dataEnd; i+=4 ){
-                if (i == 172) {
-                    simout << "172:\t";
-                }
-                else if (i == 204) {
-                    simout << endl << "204:\t";
-                }
-                else if (i == 236) {
-                    simout << endl << "236:\t";
-                }
-                if (MEM[i].valid == 1)
-                simout << to_string(MEM[i].funct - 64) << "\t";
-                else 
-                simout << to_string(MEM[i].funct) << "\t";
+    //             }
+    //     simout << "\n\ndata:" << endl;
+    //         for (int i = dataStart; i <= dataEnd; i+=4 ){
+    //             if (i == 172) {
+    //                 simout << "172:\t";
+    //             }
+    //             else if (i == 204) {
+    //                 simout << endl << "204:\t";
+    //             }
+    //             else if (i == 236) {
+    //                 simout << endl << "236:\t";
+    //             }
+    //             if (MEM[i].valid == 1)
+    //             simout << to_string(MEM[i].funct - 64) << "\t";
+    //             else 
+    //             simout << to_string(MEM[i].funct) << "\t";
                 
-            }
-        simout << endl << endl;
-        if (breakVal == false)
-            break;
-        PC += 4;
-        cycle += 1;
-        }
-        if (breakVal == false)
-            break;
-    }
+    //         }
+    //     simout << endl << endl;
+    //     if (breakVal == false)
+    //         break;
+    //     PC += 4;
+    //     cycle += 1;
+    //     }
+    //     if (breakVal == false)
+    //         break;
+    // }
        
 
 
@@ -413,7 +413,7 @@ set cache[4] = {0};
         while(!didBreak)
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
-            if (preissue[3] != 0) break;
+            if (preissue[3] != 0) return;
             //checks if a break instruction was fetched which stalls fetch by breaking
             if (didBreak) break;
             item I = MEM[PC];
@@ -585,52 +585,62 @@ set cache[4] = {0};
     ISSUE.run(preissue, preALU, premem, MEM);
     FETCH.run(preissue, didBreak, MEM, PC,R);
     //print state
-    /*
+
     //print state
-  /*
-        cout << "--------------------\n";
-        cout << "Cycle" << value = [cycle] << endl;
 
-        cout << "Pre-issue buffer: " << endl;
+        simout << "--------------------\n";
+        simout << "Cycle" << cycle << ": " << endl;
+
+        simout << "Pre-issue buffer: " << endl;
                 for(int i = 0; i < 4; i++){
-                        cout << "\t" << "Entry" << i << ":"<< "\t" << preissue[i] << endl;
+                        simout << "\t" << "Entry " << i << ":"<< "\t" << MEM[preissue[i]].instStr << endl;
                 }
-        cout << "Pre_ALU Queue: " << endl;
+        simout << "Pre_ALU Queue: " << endl;
                 for(int i = 0; i < 2; i++){
-                        cout << "\t" << "Entry" << i << ":" << "\t" << preALU[i] << endl;
+                        simout << "\t" << "Entry " << i << ":" << "\t" << MEM[preALU[i]].instStr << endl;
                 }
 
-        cout << "Post_ALU Queue: " << endl;
-        cout << "\t" << "Entry 0: " << "\t" << postALU << endl;
+        simout << "Post_ALU Queue: " << endl;
+        simout << "\t" << "Entry 0: " << "\t" << MEM[postALU].instStr << endl;
 
 
-        cout << "Pre_MEM Queue: " << endl;
-                for(int i = 0; i < 2; i++{
-                        cout << "\t" << "Entry" i << ": " << "\t" << premem[i] << endl;
+        simout << "Pre_MEM Queue: " << endl;
+                for(int i = 0; i < 2; i++){
+                        simout << "\t" << "Entry " << i << ": " << "\t" << MEM[premem[i]].instStr << endl;
                 }
 
-        cout << "Post_MEM Queue: ";
-        cout << "\t" << "Entry 0: " << "\t" << postmem << endl << endl;
+        simout << "Post_MEM Queue: ";
+        simout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
 
-        cout << "Registers";
+        simout << "Registers";
         for(int i = 0; i < 32; i++) {
                 if( (i + 1) % 8 == 0){
-                        cout << endl;
+                        simout << endl;
                         std::string numstr = to_string(i);
                         if (numstr.size() == 1) numstr = '0' + numstr;
-                        cout << "R" << numstr << ":";
+                        simout << "R" << numstr << ":";
                 }
-                cout << "\t" << R[i];
+                simout << "\t" << R[i];
         }
 
-        cout << "Data" << endl;
+        simout << "Data" << endl;
+
+        int count = 1;
+
+        for (int i = dataStart; i <= dataEnd; i+=4) {
+            if (i == dataStart)
+                simout << i << ":";
+            if (count % 8 == 0){
+                simout << endl << i << ":";
+            }
+            simout << "\t" << MEM[i].asUint;
+        }
 
     }
 
-    */
     
  }
-}
+
 
 
 
