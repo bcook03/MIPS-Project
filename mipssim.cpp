@@ -249,18 +249,18 @@ int main(int argc, char* argv[] )
  //int postmem = {0};
  //int postalu = {0};
 
-struct line {
-    int validBit, dirtyBit, tag, data;
-};struct entry {
-    line Line[2] = {0};
-};
-struct set {
-    int LRUbit;
-    entry Entry[2] = {0};
+// struct line {
+//     int validBit, dirtyBit, tag, data;
+// };struct entry {
+//     line Line[2] = {0};
+// };
+// struct set {
+//     int LRUbit;
+//     entry Entry[2] = {0};
 
-};
+// };
 
-set cache[4] = {0};
+// set cache[4] = {0};
 
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
@@ -311,7 +311,7 @@ set cache[4] = {0};
         }
     }
  };
-
+    fetch FETCH;
  
  // Depending on the conditions, it either continues or updates the `preissue` array.
 //- It rearranges elements in the `preissue` array based on certain conditions.
@@ -358,6 +358,7 @@ set cache[4] = {0};
         }
     };
 
+    issue ISSUE;
  
 /*
  Defines a struct `alu` with a method `run()`.
@@ -391,6 +392,8 @@ set cache[4] = {0};
 
     };
 
+    alu ALU;
+
     struct mem{
         void run(int premem[], item MEM[], int PC, int R[], int postmem){
             if(premem[0] != 0){
@@ -411,6 +414,8 @@ set cache[4] = {0};
         }
     };
 
+    mem MEMO;
+
     struct write {
         void run(item MEM[], int R[], int postalu, int postmem, int aluValue, int memValue) {
             if (postmem != 0) {
@@ -423,13 +428,7 @@ set cache[4] = {0};
             return;
         }
     };
-
-
  
- fetch FETCH;
- issue ISSUE;
- alu ALU;
- mem MEMO;
  write WB;
 
  while(!didBreak){
