@@ -503,7 +503,6 @@ int main(int argc, char* argv[] )
         }
         cycle += 1;
     }
-
     
  }
 
