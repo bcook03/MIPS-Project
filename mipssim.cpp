@@ -13,6 +13,39 @@ struct item{
         string instStr, binstr, binStrSpace;
 
     };
+     bool didBreak = false;
+ int preissue[4] = {0};
+ int premem[2] = {0};
+ int preALU[2] = {0};
+ int postmem = {0};
+ int postALU = {0};
+ int aluValue = 0;
+ int memValue = 0;
+//map<int, item>MEM;
+bool XBW( int rNum, int index, item MEM[] ){
+        for( int i = 0; i < index; i++ ) {
+                if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
+        }
+        for( int i = 0; i < 2; i++ ) {
+                if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
+        }
+        for( int i = 0; i < 2; i++ ) {
+                if( preALU[i] != 0 && MEM[preALU[i]].dest == rNum) return true;
+        }
+        if( postALU != 0 && MEM[postALU].dest == rNum) return true;
+        if( postmem !=0 && MEM[postmem].dest == rNum) return true;
+        return false;
+}
+
+bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue[] ){
+        for(int i=0; i < 4; i++){
+            if (preissue[i] != 0 && MEM[preissue[i]].rs == rNum) return true;
+            if (preissue[i] != 0 && MEM[preissue[i]].rt == rNum) return true;
+
+            return false;
+        }
+        return false;
+}
     struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
         while(!didBreak)
@@ -179,39 +212,7 @@ struct item{
             return;
         }
     };
- bool didBreak = false;
- int preissue[4] = {0};
- int premem[2] = {0};
- int preALU[2] = {0};
- int postmem = {0};
- int postALU = {0};
- int aluValue = 0;
- int memValue = 0;
-//map<int, item>MEM;
-bool XBW( int rNum, int index, item MEM[] ){
-        for( int i = 0; i < index; i++ ) {
-                if( preissue[i] !=0 && MEM[preissue[i]].dest == rNum) return true;
-        }
-        for( int i = 0; i < 2; i++ ) {
-                if( premem[i] != 0 &&MEM[premem[i]].dest == rNum) return true;
-        }
-        for( int i = 0; i < 2; i++ ) {
-                if( preALU[i] != 0 && MEM[preALU[i]].dest == rNum) return true;
-        }
-        if( postALU != 0 && MEM[postALU].dest == rNum) return true;
-        if( postmem !=0 && MEM[postmem].dest == rNum) return true;
-        return false;
-}
 
-bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue[] ){
-        for(int i=0; i < 4; i++){
-            if (preissue[i] != 0 && MEM[preissue[i]].rs == rNum) return true;
-            if (preissue[i] != 0 && MEM[preissue[i]].rt == rNum) return true;
-
-            return false;
-        }
-        return false;
-}
 
 int main(int argc, char* argv[] )
 {
