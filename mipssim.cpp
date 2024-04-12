@@ -242,7 +242,7 @@ int main(int argc, char* argv[] )
 
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
-        while(didBreak == false)
+        while(didBreak == false) {
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
             if (preissue[3] != 0) return;
@@ -288,6 +288,7 @@ int main(int argc, char* argv[] )
 
         }
     }
+ }
  };
     
  
