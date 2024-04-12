@@ -114,6 +114,9 @@ int main(int argc, char* argv[] )
                 {
                     I.instStr = to_string(i);
                     I.binStrSpace = I.binstr;
+
+                    disout << I.binstr << "\t" << I.instStr << endl;
+                    cout << I.binstr << "\t" << I.instStr << endl;
                 }
                 else if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
