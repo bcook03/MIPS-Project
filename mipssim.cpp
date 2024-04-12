@@ -13,7 +13,7 @@ struct item{
         string instStr, binstr, binStrSpace;
 
     };
-     bool didBreak = false;
+ bool didBreak = false;
  int preissue[4] = {0};
  int premem[2] = {0};
  int preALU[2] = {0};
@@ -46,173 +46,6 @@ bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue
         }
         return false;
 }
-    struct fetch{
-    void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
-        while(!didBreak)
-        for (int i = 0; i < 2; i++) {
-            //checks if there is room at pre-issue
-            if (preissue[3] != 0) return;
-            //checks if a break instruction was fetched which stalls fetch by breaking
-            if (didBreak) break;
-            item I = MEM[PC];
-
-            // if I is branch or jump, try to do it then break
-            //BLTZ opcode 000001(1)
-            if((I.opcode == 33 && R[I.rt] == 0)){
-                //want to find target address and break and check if it is taken
-                if (R[I.rs] > 0){
-                    PC = I.offset; 
-                }
-                break;
-            }
-            // J opcode 000010(2)
-            else if(I.opcode == 34){
-                //goes here
-                PC = I.instr_index;
-                break;
-            }
-            //JR opcode 001000(8)
-            else if (I.opcode == 32 && I.funct == 8){
-                PC = R[I.rs];
-                break;
-            }
-            //BREAK opcode 001101(13)
-            else if (I.opcode == 32 && I.funct == 13){
-                didBreak = true;
-                break;
-            }
-            // else move I to next open spot in preissue
-            else {
-                for (int j = 0; j < 4; j++) {
-                    if (preissue[j] == 0)
-                        preissue[j] = I.asUint;
-                        break;
-
-                }
-            }
-        
-
-        }
-    }
- };
-    
- 
- // Depending on the conditions, it either continues or updates the `preissue` array.
-//- It rearranges elements in the `preissue` array based on certain conditions.
-    struct issue{
-        void run(int preissue[], int preALU[], int premem[], item MEM[]){
-            for(int i = 0; i < 4; i++){
-                if (preissue[i] == 0) continue;
-                item I = MEM[preissue[i]];
-                if (XBW( I.opp1, i, MEM)) continue;
-                if (XBW(I.opp2, i, MEM)) continue;
-                if (XBW(I.dest, i, MEM)) continue;
-                // WBR Check
-                if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
-                if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
-                if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
-                if (I.opcode == 35 || I.opcode == 43) {
-                    if (premem[1] != 0) continue;
-                    //LW SW checcks
-                    //issue
-                    for(int j = 0; j < 2; j++){
-                        if(premem[j] == 0){
-                            premem[j] = I.asUint;
-                        }
-                    }
-                    preissue[i] = 0;
-                }
-                else {
-                    //
-                    for(int k = 0; k < 2; k++){
-                        if(preALU[k] == 0){
-                            preALU[k] = I.asUint;
-                        }
-                    }
-                    preissue[i] = 0;
-                }
-            }
-            for (int k = 0; k < 4; k++)
-                for (int i = 3; i > 0; i--){
-                    if(preissue[i-1] == 0){
-                        preissue[i-1] = preissue[i];
-                        preissue[i] = 0;
-                    }
-                }
-        }
-    };
-
-    
- 
-/*
- Defines a struct `alu` with a method `run()`.
-- The `run()` method iterates through a loop of 2 elements.
-- It handles moving elements from `preALU` to `postALU` based on certain conditions.
-*/
-   struct alu{
-        void run(int preALU[], item MEM[], int PC, int R[], int postalu){
-            if(preALU[0] != 0){
-                for(int i = 0; i < 2; i++){
-                    if(postALU != 0) break;
-                    item I = MEM[preALU[i]];
-                    //if there is nothing in the preALU, do nothing
-                    // if there is something in the preALU-move it to post, unless post is full
-                        //ADDI R[I.rt] = R[I.rs] + I.imm;
-                        if(I.opcode == 40){
-                            postALU = I.rt; // destination
-                            aluValue = R[I.rs] + I.imm;
-                        }
-                        //ADD R[I.rd] = R[I.rs] + R[I.rt];
-                        if (I.opcode == 32 && I.funct == 32) {
-                            postALU = I.rd; //destination
-                            aluValue = R[I.rs] + R[I.rt];
-                        }
-                }
-                //need to clear out the instruction executed and move the next down
-                preALU[0] = preALU[1];
-                preALU[1] = 0;
-            }
-        }
-
-    };
-
-    
-
-    struct mem{
-        void run(int premem[], item MEM[], int PC, int R[], int postmem){
-            if(premem[0] != 0){
-                for(int i = 0; i < 2; i++){
-                    if(postmem != 0) break;
-                    item I = MEM[premem[i]];
-                    //if SW
-                    if(I.opcode == 43){
-                        MEM[I.rs + I.imm].funct = R[I.rt];
-                    }
-                    //LW
-                    if(I.opcode == 35){
-                        postmem = I.rt; //destination
-                        memValue = MEM[I.rs + I.imm].funct;
-                    }
-                }
-            }
-        }
-    };
-
-    
-
-    struct writeback {
-        void run(item MEM[], int R[], int postalu, int postmem, int aluValue, int memValue) {
-            if (postmem != 0) {
-                R[postmem] = memValue;
-            }
-            else if (postalu != 0) {
-                R[postalu] = aluValue;
-
-            }
-            return;
-        }
-    };
-
 
 int main(int argc, char* argv[] )
 {
@@ -405,6 +238,174 @@ int main(int argc, char* argv[] )
     int cycle = 1;
     didBreak = false;
 
+
+ struct fetch{
+    void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
+        while(!didBreak)
+        for (int i = 0; i < 2; i++) {
+            //checks if there is room at pre-issue
+            if (preissue[3] != 0) return;
+            //checks if a break instruction was fetched which stalls fetch by breaking
+            if (didBreak) break;
+            item I = MEM[PC];
+
+            // if I is branch or jump, try to do it then break
+            //BLTZ opcode 000001(1)
+            if((I.opcode == 33 && R[I.rt] == 0)){
+                //want to find target address and break and check if it is taken
+                if (R[I.rs] > 0){
+                    PC = I.offset; 
+                }
+                break;
+            }
+            // J opcode 000010(2)
+            else if(I.opcode == 34){
+                //goes here
+                PC = I.instr_index;
+                break;
+            }
+            //JR opcode 001000(8)
+            else if (I.opcode == 32 && I.funct == 8){
+                PC = R[I.rs];
+                break;
+            }
+            //BREAK opcode 001101(13)
+            else if (I.opcode == 32 && I.funct == 13){
+                didBreak = true;
+                break;
+            }
+            // else move I to next open spot in preissue
+            else {
+                for (int j = 0; j < 4; j++) {
+                    if (preissue[j] == 0)
+                        preissue[j] = I.asUint;
+                        break;
+
+                }
+            }
+        
+
+        }
+    }
+ };
+    
+ 
+ // Depending on the conditions, it either continues or updates the `preissue` array.
+//- It rearranges elements in the `preissue` array based on certain conditions.
+    struct issue{
+        void run(int preissue[], int preALU[], int premem[], item MEM[]){
+            for(int i = 0; i < 4; i++){
+                if (preissue[i] == 0) continue;
+                item I = MEM[preissue[i]];
+                if (XBW( I.opp1, i, MEM)) continue;
+                if (XBW(I.opp2, i, MEM)) continue;
+                if (XBW(I.dest, i, MEM)) continue;
+                // WBR Check
+                if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
+                if (I.opcode == 35 || I.opcode == 43) {
+                    if (premem[1] != 0) continue;
+                    //LW SW checcks
+                    //issue
+                    for(int j = 0; j < 2; j++){
+                        if(premem[j] == 0){
+                            premem[j] = I.asUint;
+                        }
+                    }
+                    preissue[i] = 0;
+                }
+                else {
+                    //
+                    for(int k = 0; k < 2; k++){
+                        if(preALU[k] == 0){
+                            preALU[k] = I.asUint;
+                        }
+                    }
+                    preissue[i] = 0;
+                }
+            }
+            for (int k = 0; k < 4; k++)
+                for (int i = 3; i > 0; i--){
+                    if(preissue[i-1] == 0){
+                        preissue[i-1] = preissue[i];
+                        preissue[i] = 0;
+                    }
+                }
+        }
+    };
+
+    
+ 
+/*
+ Defines a struct `alu` with a method `run()`.
+- The `run()` method iterates through a loop of 2 elements.
+- It handles moving elements from `preALU` to `postALU` based on certain conditions.
+*/
+   struct alu{
+        void run(int preALU[], item MEM[], int PC, int R[], int postalu){
+            if(preALU[0] != 0){
+                for(int i = 0; i < 2; i++){
+                    if(postALU != 0) break;
+                    item I = MEM[preALU[i]];
+                    //if there is nothing in the preALU, do nothing
+                    // if there is something in the preALU-move it to post, unless post is full
+                        //ADDI R[I.rt] = R[I.rs] + I.imm;
+                        if(I.opcode == 40){
+                            postALU = I.rt; // destination
+                            aluValue = R[I.rs] + I.imm;
+                        }
+                        //ADD R[I.rd] = R[I.rs] + R[I.rt];
+                        if (I.opcode == 32 && I.funct == 32) {
+                            postALU = I.rd; //destination
+                            aluValue = R[I.rs] + R[I.rt];
+                        }
+                }
+                //need to clear out the instruction executed and move the next down
+                preALU[0] = preALU[1];
+                preALU[1] = 0;
+            }
+        }
+
+    };
+
+    
+
+    struct mem{
+        void run(int premem[], item MEM[], int PC, int R[], int postmem){
+            if(premem[0] != 0){
+                for(int i = 0; i < 2; i++){
+                    if(postmem != 0) break;
+                    item I = MEM[premem[i]];
+                    //if SW
+                    if(I.opcode == 43){
+                        MEM[I.rs + I.imm].funct = R[I.rt];
+                    }
+                    //LW
+                    if(I.opcode == 35){
+                        postmem = I.rt; //destination
+                        memValue = MEM[I.rs + I.imm].funct;
+                    }
+                }
+            }
+        }
+    };
+
+    
+
+    struct writeback {
+        void run(item MEM[], int R[], int postalu, int postmem, int aluValue, int memValue) {
+            if (postmem != 0) {
+                R[postmem] = memValue;
+            }
+            else if (postalu != 0) {
+                R[postalu] = aluValue;
+
+            }
+            return;
+        }
+    };
+    
  fetch FETCH;
  issue ISSUE;
  alu ALU;
