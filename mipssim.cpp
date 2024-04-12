@@ -13,7 +13,6 @@ struct item{
         string instStr, binstr, binStrSpace;
 
     };
- bool didBreak = false;
  int preissue[4] = {0};
  int premem[2] = {0};
  int preALU[2] = {0};
@@ -69,6 +68,7 @@ int main(int argc, char* argv[] )
     };
     bool didBreak = false;
     */
+    bool didBreak = false;
     int addr = 96;
     int amt = 4;
     int dataStart, dataEnd;
