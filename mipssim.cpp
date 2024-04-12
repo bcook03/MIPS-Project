@@ -227,7 +227,6 @@ int main(int argc, char* argv[] )
             MEM[addr] = I;
             addr+=4;
         }
-        break;
     } 
     dataEnd = addr;
     
@@ -237,12 +236,7 @@ int main(int argc, char* argv[] )
     int PC = 96;
     int R[32] = {0};
     int cycle = 1;
-    breakVal = true;
-    
-       
-
-
- didBreak = false;
+    didBreak = false;
  //int preissue[4] = {0};
  //int premem[2] = {0};
  //int preALU[2] = {0};
@@ -488,7 +482,7 @@ int main(int argc, char* argv[] )
             }
             simout << "\t" << MEM[i].asUint;
         }
-
+        cycle += 1;
     }
 
     
