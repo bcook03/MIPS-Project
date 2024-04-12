@@ -110,12 +110,12 @@ int main(int argc, char* argv[] )
             I.offset = asUint << 20 >> 18;
 
 
-                if (didBreak) {
+                if (didBreak) 
                 {
                     I.instStr = to_string(i);
                     I.binStrSpace = I.binstr;
                 }
-                if (I.valid == 0){
+                else if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
                 disout << I.binstr << "\t" << I.instStr << endl;
                 cout << I.binstr << "\t" << I.instStr << endl;
@@ -218,7 +218,7 @@ int main(int argc, char* argv[] )
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                     
-            }
+            
             
 
             MEM[addr] = I;
