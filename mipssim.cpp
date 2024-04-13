@@ -413,9 +413,9 @@ int main(int argc, char* argv[] )
  mem MEMO;
  writeback WB;
 
- while(didBreak == false){
-    WB.run(MEM, R, postALU, postmem, aluValue, memValue);
-    // MEMO.run(premem, MEM, PC, R, postmem);
+ while(!didBreak){
+    // WB.run(MEM, R, postALU, postmem, aluValue, memValue);
+    MEMO.run(premem, MEM, PC, R, postmem);
     // ALU.run(preALU, MEM, PC, R, postALU);
     // ISSUE.run(preissue, preALU, premem, MEM);
     // FETCH.run(preissue, didBreak, MEM, PC,R);
