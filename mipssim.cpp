@@ -384,7 +384,7 @@ int main(int argc, char* argv[] )
                     //LW
                     if(I.opcode == 35){
                         postmem = I.rt; //destination
-                        memValue = MEM[I.rs + I.imm].funct;
+                        memValue = MEM[I.rs + I.imm].imm;
                         premem[i] = 0;
                     }
                 }
