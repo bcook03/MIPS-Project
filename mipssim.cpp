@@ -115,31 +115,41 @@ int main(int argc, char* argv[] )
                     I.binStrSpace = I.binstr;
 
                     disout << I.binstr << "\t" << I.instStr << endl;
+                    cout << I.binstr << "\t" << I.instStr << endl;
                 }
                 else if (I.valid == 0){
                 I.instStr = "Invalid Instruction";
                 disout << I.binstr << "\t" << I.instStr << endl;
+                cout << I.binstr << "\t" << I.instStr << endl;
                 }
            
                 else if (I.opcode == 34 ) {
                     I.instStr = "J\t#" + to_string(I.instr_index);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if (I.opcode == 32 && I.funct == 8) {
                     I.instStr = "JR\tR" + to_string(I.rs);
                     disout << I.binstr << " " << addr << "\t" <<I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if ( I.opcode == 33 && I.rt == 0) {
                     I.instStr = "BLTZ\tR" + to_string(I.rs) + ", #" + to_string(I.offset);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if ( I.opcode ==  36) {
                     I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+<<<<<<< HEAD
+=======
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
+>>>>>>> parent of 898e7b8 (removed couts)
                 }
                 else if ( I.opcode == 32 && I.funct == 32) {
                     I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if( I.opcode == 40 ){
                     if (I.imm > 300) {
@@ -147,58 +157,70 @@ int main(int argc, char* argv[] )
                     }
                     I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 60 && I.funct == 2){
                     I.instStr = "MUL\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct == 36) {
                     I.instStr = "And\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct ==37) {
                     I.instStr = "Or\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt);
                     disout << I.binstr << "\t" << I.instStr << endl;
+                    cout << I.binstr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct == 5) {
                     I.instStr = "MOVZ\tR" + to_string(I.rd) + ", R" + to_string(I.rs)+ ", R" + to_string(I.rt);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.sa == 0 && I.funct == 0) {
                     I.instStr = "NOP";
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                 else if(I.opcode == 32 && I.funct == 34) {
                     I.instStr = "SUB\tR" + to_string(I.rd) + ", R" + to_string(I.rs) + ", R" + to_string(I.rt); 
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 43){
                     I.instStr = "SW\tR" + to_string(I.rt) + ", " + to_string(I.imm) + "(R" + to_string(I.rs) + ')';
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 35){
                     I.instStr = "LW\tR" + to_string(I.rt) + ", " + to_string(I.imm) + "(R" + to_string(I.rs) + ')';
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 32 && I.sa > 0 && I.funct == 0){
                     I.instStr = "SLL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     // it shifts left
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
 
                 else if(I.opcode == 32 && I.funct == 2){
                     I.instStr = "SRL\tR" + to_string(I.rd) + ", R" + to_string(I.rt) + ", #" + to_string(I.sa);
                     //it shifts right
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                     }
                 else if (I.opcode == 32 && I.funct == 13) {
                     I.instStr = "BREAK";
                     didBreak = true;
                     dataStart = addr + 4;
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
+                    cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
                     
             
@@ -406,49 +428,69 @@ int main(int argc, char* argv[] )
 
         simout << "--------------------\n";
         simout << "Cycle" << cycle << ": " << endl;
+        cout << "--------------------\n";
+        cout << "Cycle" << cycle << ": " << endl;
 
         simout << "Pre-issue buffer: " << endl;
+        cout << "Pre-issue buffer: " << endl;
                 for(int i = 0; i < 4; i++){
                         simout << "\t" << "Entry " << i << ":"<< "\t" << MEM[preissue[i]].instStr << endl;
+                        cout << "\t" << "Entry " << i << ":"<< "\t" << MEM[preissue[i]].instStr << endl;
                 }
         simout << "Pre_ALU Queue: " << endl;
+        cout << "Pre_ALU Queue: " << endl;
                 for(int i = 0; i < 2; i++){
                         simout << "\t" << "Entry " << i << ":" << "\t" << MEM[preALU[i]].instStr << endl;
+                        cout << "\t" << "Entry " << i << ":" << "\t" << MEM[preALU[i]].instStr << endl;
                 }
 
         simout << "Post_ALU Queue: " << endl;
         simout << "\t" << "Entry 0: " << "\t" << MEM[postALU].instStr << endl;
+        cout << "Post_ALU Queue: " << endl;
+        cout << "\t" << "Entry 0: " << "\t" << MEM[postALU].instStr << endl;
 
         simout << "Pre_MEM Queue: " << endl;
+        cout << "Pre_MEM Queue: " << endl;
                 for(int i = 0; i < 2; i++){
                         simout << "\t" << "Entry " << i << ": " << "\t" << MEM[premem[i]].instStr << endl;
+                        cout << "\t" << "Entry " << i << ": " << "\t" << MEM[premem[i]].instStr << endl;
                 }
 
         simout << "Post_MEM Queue: ";
         simout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
+        cout << "Post_MEM Queue: ";
+        cout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
 
         simout << "Registers";
+        cout << "Registers";
         for(int i = 0; i < 32; i++) {
                 if( (i + 1) % 8 == 0){
                         simout << endl;
+                        cout << endl;
                         std::string numstr = to_string(i);
                         if (numstr.size() == 1) numstr = '0' + numstr;
                         simout << "R" << numstr << ":";
+                        cout << "R" << numstr << ":";
                 }
                 simout << "\t" << R[i];
+                cout << "\t" << R[i];
         }
 
         simout << "Data" << endl;
+        cout << "Data" << endl;
 
         int count = 1;
 
         for (int i = dataStart; i <= dataEnd; i+=4) {
             if (i == dataStart)
                 simout << i << ":";
+                cout << i << ":";
             if (count % 8 == 0){
                 simout << endl << i << ":";
+                cout << endl << i << ":";
             }
             simout << "\t" << MEM[i].asUint;
+            cout << "\t" << MEM[i].asUint;
         }
         cycle += 1;
     }
