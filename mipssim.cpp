@@ -297,13 +297,13 @@ int main(int argc, char* argv[] )
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                // if (XBW( I.rs, i, MEM)) continue;
-                // if (XBW(I.rt, i, MEM)) continue;
-                // if (XBW(I.rd, i, MEM)) continue;
+                if (XBW( I.rs, i, MEM)) continue;
+                if (XBW(I.rt, i, MEM)) continue;
+                if (XBW(I.rd, i, MEM)) continue;
                 // // WBR Check
-                // if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
-                // if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
-                // if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
+                if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
                 if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
                     //LW SW checcks
