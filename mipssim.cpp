@@ -242,7 +242,6 @@ int main(int argc, char* argv[] )
 
  struct fetch{
     void run(int preissue[], bool didBreak, item MEM[], int PC, int R[]){
-        while(!didBreak) {
         for (int i = 0; i < 2; i++) {
             //checks if there is room at pre-issue
             if (preissue[3] != 0) break;
@@ -289,8 +288,8 @@ int main(int argc, char* argv[] )
 
         }
     }
- }
  };
+ 
     
  
  // Depending on the conditions, it either continues or updates the `preissue` array.
@@ -414,10 +413,10 @@ int main(int argc, char* argv[] )
  writeback WB;
 
  while(!didBreak){
-    // WB.run(MEM, R, postALU, postmem, aluValue, memValue);
-    // MEMO.run(premem, MEM, PC, R, postmem);
-    // ALU.run(preALU, MEM, PC, R, postALU);
-    // ISSUE.run(preissue, preALU, premem, MEM);
+    WB.run(MEM, R, postALU, postmem, aluValue, memValue);
+    MEMO.run(premem, MEM, PC, R, postmem);
+    ALU.run(preALU, MEM, PC, R, postALU);
+    ISSUE.run(preissue, preALU, premem, MEM);
     FETCH.run(preissue, didBreak, MEM, PC,R);
     //print state
 
