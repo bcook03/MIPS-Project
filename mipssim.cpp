@@ -37,11 +37,9 @@ bool XBW( int rNum, int index, item MEM[] ){
 }
 
 bool WBR(int rNum, int index, item MEM[], int postalu, int postmem, int preissue[] ){
-        for(int i=0; i < 4; i++){
+        for(int i=0; i < index; i++){
             if (preissue[i] != 0 && MEM[preissue[i]].rs == rNum) return true;
             if (preissue[i] != 0 && MEM[preissue[i]].rt == rNum) return true;
-
-            return false;
         }
         return false;
 }
@@ -297,13 +295,13 @@ int main(int argc, char* argv[] )
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                // if (XBW( I.rs, i, MEM)) continue;
-                // if (XBW(I.rt, i, MEM)) continue;
-                // if (XBW(I.rd, i, MEM)) continue;
-                // WBR Check
-                // if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
-                // if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
-                // if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
+                if (XBW( I.rs, i, MEM)) continue;
+                if (XBW(I.rt, i, MEM)) continue;
+                if (XBW(I.rd, i, MEM)) continue;
+                //WBR Check
+                if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
+                if (WBR(I.rd, i, MEM, postALU, postmem, preissue)) continue;                             
                 if (I.opcode == 35 || I.opcode == 43) {
                     if (premem[1] != 0) continue;
                     //LW SW checcks
@@ -458,10 +456,14 @@ int main(int argc, char* argv[] )
         simout << "Registers";
         cout << "Registers";
         for(int i = 0; i < 32; i++) {
+            if (i == 0) {
+                cout << "R0:";
+                simout << "R0:";
+            }
                 if( (i + 1) % 8 == 0){
                         simout << endl;
                         cout << endl;
-                        std::string numstr = to_string(i);
+                        std::string numstr = to_string(i+1);
                         if (numstr.size() == 1) numstr = '0' + numstr;
                         simout << "R" << numstr << ":";
                         cout << "R" << numstr << ":";
@@ -469,9 +471,10 @@ int main(int argc, char* argv[] )
                 simout << "\t" << R[i];
                 cout << "\t" << R[i];
         }
+        
 
-        simout << "Data" << endl;
-        cout << "Data" << endl;
+        simout << endl << "Data" << endl;
+        cout << endl << "Data" << endl;
 
         int count = 1;
 
@@ -487,6 +490,8 @@ int main(int argc, char* argv[] )
             simout << "\t" << MEM[i].asUint;
             cout << "\t" << MEM[i].asUint;
         }
+        simout << endl;
+        cout << endl;
         cycle += 1;
     }
  }
