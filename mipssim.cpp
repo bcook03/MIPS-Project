@@ -423,9 +423,9 @@ int main(int argc, char* argv[] )
     //print state
 
         simout << "--------------------\n";
-        simout << "Cycle" << cycle << ": " << endl;
+        simout << "Cycle" << ": " << cycle << endl;
         cout << "--------------------\n";
-        cout << "Cycle" << cycle << ": " << endl;
+        cout << "Cycle" << ": " << cycle << endl;
 
         simout << "Pre-issue buffer: " << endl;
         cout << "Pre-issue buffer: " << endl;
@@ -478,9 +478,10 @@ int main(int argc, char* argv[] )
         int count = 1;
 
         for (int i = dataStart; i <= dataEnd; i+=4) {
-            if (i == dataStart)
+            if (i == dataStart) {
                 simout << i << ":";
                 cout << i << ":";
+            }
             if (count % 8 == 0){
                 simout << endl << i << ":";
                 cout << endl << i << ":";
