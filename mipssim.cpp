@@ -219,9 +219,6 @@ int main(int argc, char* argv[] )
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
                 }
-                    
-            
-            
 
             MEM[addr] = I;
             dataEnd = addr;
