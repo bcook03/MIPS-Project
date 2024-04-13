@@ -378,7 +378,7 @@ int main(int argc, char* argv[] )
                     item I = MEM[premem[i]];
                     //if SW
                     if(I.opcode == 43){
-                        MEM[I.rs + I.imm].funct = R[I.rt];
+                        MEM[I.rs + I.imm].imm = R[I.rt];
                         premem[i] = 0;
                     }
                     //LW
