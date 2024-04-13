@@ -73,7 +73,7 @@ int main(int argc, char* argv[] )
     int amt = 4;
     int dataStart, dataEnd;
     item MEM[500];
-    while (!didBreak)
+    while ( amt != 0 )
     {
         
         amt = read(FD, buffer, 4);
