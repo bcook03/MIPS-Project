@@ -141,10 +141,7 @@ int main(int argc, char* argv[] )
                 else if ( I.opcode ==  36) {
                     I.instStr = "BEQ\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.offset);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
-<<<<<<< HEAD
-=======
                     cout << I.binstr << " " << addr << "\t" << I.instStr << endl;
->>>>>>> parent of 898e7b8 (removed couts)
                 }
                 else if ( I.opcode == 32 && I.funct == 32) {
                     I.instStr = "ADD\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", R" + to_string(I.rd);
