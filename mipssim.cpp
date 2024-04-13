@@ -300,9 +300,9 @@ int main(int argc, char* argv[] )
             for(int i = 0; i < 4; i++){
                 if (preissue[i] == 0) continue;
                 item I = MEM[preissue[i]];
-                if (XBW( I.opp1, i, MEM)) continue;
-                if (XBW(I.opp2, i, MEM)) continue;
-                if (XBW(I.dest, i, MEM)) continue;
+                if (XBW( I.rs, i, MEM)) continue;
+                if (XBW(I.rt, i, MEM)) continue;
+                if (XBW(I.rd, i, MEM)) continue;
                 // WBR Check
                 if (WBR(I.rs, i, MEM, postALU, postmem, preissue)) continue;                           
                 if (WBR(I.rt, i, MEM, postALU, postmem, preissue)) continue;                           
@@ -313,19 +313,21 @@ int main(int argc, char* argv[] )
                     //issue
                     for(int j = 0; j < 2; j++){
                         if(premem[j] == 0){
-                            premem[j] = I.asUint;
+                            premem[j] = preissue[i];
+                            preissue[i] = 0;
                         }
                     }
-                    preissue[i] = 0;
+                    
                 }
                 else {
                     //
                     for(int k = 0; k < 2; k++){
                         if(preALU[k] == 0){
-                            preALU[k] = I.asUint;
+                            preALU[k] = preissue[i];
+                            preissue[i] = 0;
                         }
                     }
-                    preissue[i] = 0;
+                    
                 }
             }
             for (int k = 0; k < 4; k++) {
@@ -453,9 +455,9 @@ int main(int argc, char* argv[] )
                         cout << "\t" << "Entry " << i << ": " << "\t" << MEM[premem[i]].instStr << endl;
                 }
 
-        simout << "Post_MEM Queue: ";
+        simout << "Post_MEM Queue: " << endl;
         simout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
-        cout << "Post_MEM Queue: ";
+        cout << "Post_MEM Queue: " << endl;
         cout << "\t" << "Entry 0: " << "\t" << MEM[postmem].instStr << endl << endl;
 
         simout << "Registers";
