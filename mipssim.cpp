@@ -150,7 +150,7 @@ int main(int argc, char* argv[] )
                 }
                 else if( I.opcode == 40 ){
                     if (I.imm > 300) {
-                        I.imm = -1;
+                        I.imm = ((asUint << 28) >> 28) * -1;
                     }
                     I.instStr = "ADDI\tR" + to_string(I.rt) + ", R" + to_string(I.rs) + ", #" + to_string(I.imm);
                     disout << I.binstr << " " << addr << "\t" << I.instStr << endl; 
