@@ -314,17 +314,15 @@ int main(int argc, char* argv[] )
                             preissue[i] = 0;
                         }
                     }
-                    
                 }
                 else {
-                    //
+                    if (preALU[1] != 0) continue;
                     for(int k = 0; k < 2; k++){
                         if(preALU[k] == 0){
                             preALU[k] = preissue[i];
                             preissue[i] = 0;
                         }
                     }
-                    
                 }
             }
             for (int k = 0; k < 4; k++) {
