@@ -278,7 +278,8 @@ int main(int argc, char* argv[] )
             else {
                 for (int j = 0; j < 4; j++) {
                     if (preissue[j] == 0) {
-                        preissue[j] = I.asUint;
+                        preissue[j] = PC;
+                        PC += 4;
                         break;
                     }
 
