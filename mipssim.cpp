@@ -379,11 +379,13 @@ int main(int argc, char* argv[] )
                     //if SW
                     if(I.opcode == 43){
                         MEM[I.rs + I.imm].funct = R[I.rt];
+                        premem[i] = 0;
                     }
                     //LW
                     if(I.opcode == 35){
                         postmem = I.rt; //destination
                         memValue = MEM[I.rs + I.imm].funct;
+                        premem[i] = 0;
                     }
                 }
             }
